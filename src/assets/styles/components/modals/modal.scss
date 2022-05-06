@@ -1,0 +1,47 @@
+@use "../../_variables" as v;
+@use "../../_functions" as f;
+
+.c-modal {
+	border: none;
+	position: absolute;
+	top: 30%;
+	text-align: center;
+	padding: f.rem(30px) f.rem(40px);
+
+	&__title {
+		color: #000;
+		display: inline-flex;
+		font-size: f.rem(28px);
+		font-family: v.$font-oxygen;
+		justify-content: space-between;
+
+		h1 {
+			font-size: f.rem(28px);
+			margin-top: f.rem(0px);
+		}
+	}
+
+	&--close-cross {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: f.rem(40px);
+		position: absolute;
+		right: f.rem(30px);
+		top: f.rem(10px);
+		outline: 0px;
+	}
+
+	&--modal-body {
+		position: relative;
+		padding: f.rem(0px) f.rem(10px);
+	}
+
+	&::backdrop {
+		background-color: v.$modal-overlay-background-color;
+	}
+}
+
+dialog + .backdrop {
+	background-color: v.$modal-overlay-background-color;
+}

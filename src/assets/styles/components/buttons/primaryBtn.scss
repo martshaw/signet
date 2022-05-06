@@ -1,0 +1,31 @@
+@use "core";
+@use '../../functions' as f;
+
+$_main-button-background-color: black;
+$_main-button-text-color: white;
+
+@mixin _keyboard-focus {
+	background: transparent;
+	border: f.rem(3px) solid $_main-button-background-color;
+	color: $_main-button-background-color;
+}
+
+.t-primary-btn {
+	border-color: $_main-button-background-color;
+	background: $_main-button-background-color;
+	color: $_main-button-text-color;
+
+	&:not(:disabled) {
+		&:-moz-focusring {
+			@include _keyboard-focus;
+		}
+
+		&:focus-visible {
+			@include _keyboard-focus;
+		}
+	}
+
+	&--rounded {
+		border-radius: f.rem(2px);
+	}
+}

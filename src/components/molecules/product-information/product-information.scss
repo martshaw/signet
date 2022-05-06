@@ -1,0 +1,63 @@
+@use "../../../assets/styles/_variables"as v;
+@use "../../../assets/styles/_functions"as f;
+
+.c-product-information {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+
+	&__title {
+		font-size: f.rem(28px);
+		line-height: 34px;
+		margin: 0 0 f.rem(10px);
+	}
+
+	&__divider {
+		padding: f.rem(12px) 0 f.rem(15px);
+		flex: 0 0 100%;
+		border-bottom: solid f.rem(1px);
+		border-bottom-color: v.$product-information-divider-color;
+	}
+
+	&__financial-link {
+		text-decoration: none;
+	}
+
+	&__stepupdown {
+		&__container {
+			margin-top: f.rem(10px);
+		}
+	}
+}
+
+.price-ratings-container {
+	display: flex;
+	flex: 100%;
+
+	&__price {
+		color: v.$product-info-ratings-text-color;
+		justify-content: flex-start;
+		flex-flow: column;
+		align-items: flex-start;
+		height: fit-content;
+		padding: 0;
+		flex: 50%;
+
+		&__current {
+			font-size: f.rem(28px);
+			padding-bottom: f.rem(15px);
+		}
+
+		&__finance {
+			border: f.rem(2px) solid v.$product-info-ratings-finance-color;
+			padding: f.rem(5px);
+		}
+	}
+
+	&__ratings {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex: 50%;
+	}
+}

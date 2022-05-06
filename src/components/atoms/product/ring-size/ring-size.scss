@@ -1,0 +1,72 @@
+@use "../../../../assets/styles/_variables" as v;
+@use "../../../../assets/styles/_functions" as f;
+@use "../../../../assets/styles/mixins" as m;
+
+.product-ring-size {
+	display: flex;
+	align-items: stretch;
+	flex: 100%;
+	margin-top: f.rem(10px);
+
+	&__will-it-fit {
+		position: absolute;
+		right: f.rem(19px);
+	}
+
+	&__text {
+		flex: 50%;
+	}
+
+	&__heading {
+		margin: 0;
+	}
+
+	&__data {
+		flex: 50%;
+		text-align: right;
+	}
+
+	&__select {
+		border: none;
+		outline: 0;
+		color: inherit;
+		font-weight: v.$product-ring-size-font-weight;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background: url('//d113iaclfvkn13.cloudfront.net/icons/chevron-down.svg') calc(100% - #{f.rem(10px)}) center no-repeat;
+		background-size: f.rem(12px) f.rem(7px);
+		direction: rtl; // ios doesnot support text-align-last property hence used direction to set the default alignment of text in the right direction
+		padding-right: f.rem(30px);
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus-visible {
+			outline: none;
+		}
+
+		option[default] {
+			display: none;
+		}
+	}
+}
+
+@include m.breakpoint(large-handset-landscape) {
+	.product-ring-size {
+		&__select {
+			outline: 0;
+			background-position: calc(100% - #{f.rem(2px)}) center;
+			padding-right: f.rem(20px);
+		}
+
+		&__will-it-fit {
+			margin-left: f.rem(10px);
+			display: flex;
+			margin-top: f.rem(3px);
+			position: relative;
+			right: inherit;
+		}
+	}
+}

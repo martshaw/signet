@@ -1,0 +1,12 @@
+@use 'breakpoints' as b;
+@use 'functions' as f;
+
+@mixin breakpoint($size, $direction: min-width) {
+	@if map-has-key(b.$breakpoints, $size) {
+		@media ($direction: #{f.rem(map-get(b.$breakpoints, $size))}) {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$size}`. " + "Please make sure it is defined in $site-breakpoints map.";
+	}
+}

@@ -1,0 +1,35 @@
+@use "../../variables" as v;
+@use "../../functions" as f;
+
+$track-w: f.rem(129px) !default;
+$track-h: f.rem(4px) !default;
+$thumb-d: f.rem(24px) !default;
+$_thumb-c: v.$thumb-color !default;
+$_track-c: v.$track-before-thumb-fill !default;
+$_fill-c: v.$track-after-thumb-fill !default;
+
+@mixin track($fill: 0) {
+	box-sizing: border-box;
+	border: none;
+	width: $track-w;
+	height: $track-h;
+	background: $_track-c;
+
+	@if( $fill == 1 ) {
+		background: linear-gradient($_fill-c, $_fill-c) 0/ var(--sx) 100% no-repeat $_track-c;
+	}
+}
+
+@mixin fill {
+	height: $track-h;
+	background: $_fill-c;
+}
+
+@mixin thumb {
+	box-sizing: border-box;
+	border: none;
+	width: $thumb-d;
+	height: $thumb-d;
+	border-radius: 50%;
+	background: $_thumb-c;
+}

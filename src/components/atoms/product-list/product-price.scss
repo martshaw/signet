@@ -1,0 +1,37 @@
+@use "../../../assets/styles/variables" as v;
+@use "../../../assets/styles/functions" as f;
+@use "../../../assets/styles/mixins" as m;
+
+.product-price {
+	align-items: center;
+	border-bottom: f.rem(1px) solid v.$plp-product-background-color;
+	border-top: f.rem(1px) solid v.$plp-product-background-color;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: f.rem(14px);
+	height: f.rem(79px); // Giving it a fixed height to help with alignment
+	justify-content: space-evenly;
+	padding: f.rem(8px) f.rem(10px);
+
+	&__current {
+		font-size: f.rem(18px);
+		font-weight: v.$plp-price-font-weight;
+
+		&--on-sale {
+			color: v.$plp-price-on-sale;
+		}
+	}
+
+	&__was {
+		color: v.$plp-product-price-was-color;
+		flex-basis: 100%;
+		flex-grow: 1;
+		margin-bottom: f.rem(6px);
+		text-align: center;
+	}
+
+	&__finance--important {
+		font-size: f.rem(16px);
+		font-weight: v.$plp-price-font-weight;
+	}
+}

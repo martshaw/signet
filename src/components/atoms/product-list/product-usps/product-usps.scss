@@ -1,0 +1,12 @@
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/variables" as v;
+@use "../../../../assets/styles/mixins" as m;
+
+.product-usps {
+	font-size: f.rem(15px);
+	color: v.$switch-text-color;
+	list-style-position: inside;
+	margin: 0;
+	padding-left: f.rem(28px);
+	text-indent: f.rem(-17px);
+}

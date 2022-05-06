@@ -1,0 +1,21 @@
+/**
+ * Breakpoints
+ * lifted from Googles Material Design guidelines:
+ * https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+ * ! rem values determined off 16px base-font-size
+ */
+
+$breakpoints: (
+	medium-handset-portrait: 360px, 
+	large-handset-portrait: 400px, 
+	small-handset-landscape: 480px, 
+	small-tablet-portrait: 600px, 
+	large-tablet-portrait: 720px, 
+	large-handset-landscape: 840px, 
+	small-tablet-landscape: 960px, 
+	large-tablet-landscape: 1024px, 
+	small-desktop: 1280px, 
+	medium-desktop: 1440px, 
+	large-desktop: 1600px, 
+	xlarge-desktop: 1920px 
+);

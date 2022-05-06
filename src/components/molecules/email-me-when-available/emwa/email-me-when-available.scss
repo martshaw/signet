@@ -1,0 +1,24 @@
+@use "../../../../assets/styles/variables" as v;
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/mixins" as m;
+@use "../../../../assets/styles/components/buttons/primaryBtn";
+
+.emwa {
+	width: fit-content;
+	background-color: v.$emwa-background-color;
+	font-family: v.$emwa-font;
+	display: flex;
+	flex-flow: row wrap;
+	text-align: left;
+	padding: f.rem(18px);
+	color: v.$emwa-text-font-color;
+
+	::v-deep &__error{
+		outline: f.rem(1px) solid v.$error-color;
+	}
+}
+
+.c-error-container {
+	font-family: v.$emwa-error-font;
+	margin-bottom: 0;
+}

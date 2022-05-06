@@ -1,0 +1,24 @@
+@use "../../variables" as v;
+@use "../../functions" as f;
+
+.c-section-content {
+	color: #494949;
+	font-family: v.$body-font;
+	line-height: f.rem(31px);
+	padding-top: f.rem(16px);
+
+	&__finance-plan {
+		max-width: f.rem(500px);
+		width: 100%;
+	}
+
+	th {
+		text-align: left;
+		font-weight: normal;
+	}
+
+	td {
+		color: #545454;
+		font-weight: 700;
+	}
+}

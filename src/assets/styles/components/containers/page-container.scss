@@ -1,0 +1,10 @@
+@use "../../functions" as f;
+@use "../../mixins" as m;
+
+.container {
+	margin: 0 auto;
+
+	@include m.breakpoint(small-tablet-portrait) {
+		max-width: f.rem(1440px);
+	}
+}

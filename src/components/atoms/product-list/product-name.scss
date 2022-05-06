@@ -1,0 +1,17 @@
+@use "../../../assets/styles/functions" as f;
+@use "../../../assets/styles/variables" as v;
+
+.product-name {
+	font-size: f.rem(16px);
+	color: v.$plp-product-text-color;
+	margin: 0;
+
+	&__tudor {
+		color: v.$plp-product-text-color;
+		padding: f.rem(8px) 0;
+		text-align: center;
+		margin-top: 0;
+		border-top: f.rem(1px) solid v.$plp-tudor-divider;
+		border-bottom: f.rem(1px) solid v.$plp-tudor-divider;
+	}
+}

@@ -1,0 +1,93 @@
+@use "../../../assets/styles/_variables"as v;
+@use "../../../assets/styles/_functions"as f;
+@use "../../../assets/styles/_mixins"as m;
+
+@use "../../../assets/styles/components/modals/core";
+
+.c-quick-view-modal {
+	font-family: v.$quick-view-modal-font-family;
+	text-align: left;
+	padding: 0;
+	max-width: 100%;
+	color: v.$quick-view-modal-font-color;
+	position: absolute;
+	// Specified for Safari as Live-chat fab is coming on the top of the dialog
+	z-index: 9999999 !important;
+
+	&__close-cross {
+		background: none;
+		border: 0;
+		cursor: pointer;
+		top: f.rem(18px);
+		right: f.rem(18px);
+		position: absolute;
+		padding: 0;
+		outline: 0;
+		z-index: 1;
+	}
+
+	&__container {
+		&__right {
+			background-color: v.$page-background-color;
+			display: flex;
+			flex-wrap: wrap;
+
+			&__product-info {
+				padding: f.rem(16px);
+			}
+
+			&__button {
+				flex: 100%;
+				margin: auto f.rem(16px) f.rem(10px);
+			}
+
+			&__error {
+				margin: f.rem(-10px) f.rem(0px) f.rem(10px) f.rem(17px);
+			}
+		}
+	}
+}
+
+.spinner {
+	position: fixed;
+	width: f.rem(80px);
+	height: f.rem(80px);
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.lds-ring {
+	display: initial;
+	position: static;
+	width: fit-content;
+	height: fit-content;
+}
+
+@include m.breakpoint(small-tablet-portrait) {
+	.c-quick-view-modal {
+		max-width: f.rem(960px);
+
+		&__container {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+
+			&__right {
+				&__product-info {
+					padding: f.rem(40px) f.rem(25px) f.rem(25px);
+				}
+
+				&__button {
+					margin: auto f.rem(25px) f.rem(16px);
+				}
+				
+				&__error {
+					margin: f.rem(-20px) f.rem(25px) f.rem(20px) f.rem(25px);
+				}
+			}
+		}
+	}
+
+	.show-spinner {
+		width: fit-content;
+	}
+}

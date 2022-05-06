@@ -1,0 +1,29 @@
+@use "../../../assets/styles/functions" as f;
+@use "../../../assets/styles/variables" as v;
+@use "../../../assets/styles/mixins" as m;
+
+.c-product-similar {
+	outline: 0;
+	font-size: f.rem(14px);
+	color: v.$plp-text-black;
+	justify-content: center;
+}
+
+.syte-button {
+	align-items: center;
+	border: none;
+	display: flex;
+	background: transparent;
+
+	&__icon {
+		height: f.rem(29px);
+		margin-right: f.rem(10px);
+		width: f.rem(28px);
+	}
+}
+
+@include m.breakpoint(large-tablet-portrait) {
+	.c-product-similar {
+		width: 100%;
+	}
+}

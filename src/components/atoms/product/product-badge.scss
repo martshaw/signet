@@ -1,0 +1,14 @@
+@use "../../../assets/styles/variables" as v;
+@use "../../../assets/styles/functions" as f;
+
+.product-badge {
+	font-size: f.rem(14px);
+	line-height: 2.2;
+	left: 0;
+	min-width: f.rem(138px);
+	position: absolute;
+	text-align: center;
+	top: 0;
+	transform: rotate(-45deg) translate(-52%, 120%);
+	transform-origin: top left;
+}

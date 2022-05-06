@@ -1,0 +1,357 @@
+@use '../../assets/styles/variables' as v;
+@use '../../assets/styles/functions' as f;
+@use '../../assets/styles/mixins' as m;
+@use '../../assets/styles/maps' as maps;
+@use '../../assets/styles/fonts';
+
+@use '../../assets/styles/utilities/site-container';
+@use '../../assets/styles/components/buttons/blackBtn';
+@use '../../assets/styles/utilities';
+@use '../../../node_modules/dialog-polyfill/dialog-polyfill.css';
+
+$text-color: #000;
+$product-overlay: rgba(16, 24, 32, .7);
+$promo-banner-background: map-get(maps.$colours, grey4);
+
+// Ingrid banners
+$banner-background: map-get(maps.$colours, neutralGrey);
+$banner-title-font-weight: map-get(maps.$colours, lightGrey);
+$banner-button-hover: map-get(maps.$colours, black);
+$banner-button-color: map-get(maps.$colours, white);
+$banner-button-color: map-get(maps.$font-weights, bold);
+
+//Quick Links
+$quick-links-background-color: #f7f6f6;
+$quick-links-image-background: #fff;
+$quick-links-text-color: #494948;
+
+.list-page {
+	@extend .u-site-container;
+	color: $text-color;
+	font-family: v.$font-oxygen;
+	padding: f.rem(10px) f.rem(10px) f.rem(31px);
+}
+
+.list-page *:hover,
+.list-page *:focus { outline: 0; }
+
+// Hide the refinements on small viewports until either the viewport increase
+// or the show refinement button is pressed
+.refinements {
+	display: none;
+}
+
+.close-refinements {
+	@extend .c-btn;
+	background: none;
+	border: none;
+	display: none;
+	width: auto;
+}
+
+.products {
+	align-items: stretch;
+	display: grid;
+	grid-gap: f.rem(32px) 0;
+}
+
+.products-display--grid {
+	grid-template-columns: 1fr 1fr;
+	grid-gap: f.rem(15px) f.rem(32px);
+}
+
+.products-display--list {
+	grid-template-rows: 1fr;
+	grid-auto-flow: row dense;
+	grid-auto-rows: 1fr;
+}
+
+.ais-StateResults {
+	grid-column: 1/-1;
+}
+
+.page-info {
+	align-items: baseline;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: 1fr 2fr;
+	margin-bottom: f.rem(32px);
+
+	&__title {
+		font-weight: map-get(maps.$font-weights, bold);
+		font-size: f.rem(26px);
+		grid-column: span 7;
+		margin: 0;
+	}
+
+	&__text {
+		grid-column: 1 /-1;
+		margin: 0;
+	}
+
+	&__jump {
+		color: inherit;
+		font-weight: map-get(maps.$font-weights, bold);
+	}
+}
+
+.list-page--refinements-open {
+	.refinements {
+		display: inherit;
+	}
+
+	.close-refinements {
+		display: inherit;
+	}
+
+	.products {
+		position: relative;
+
+		&:before {
+			background: $product-overlay;
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+}
+
+.seo-banner {
+	margin: f.rem(60px) 0 f.rem(20px);
+	padding: 0 5%;
+	scroll-margin-top: f.rem(150px);
+
+	&__title {
+		font-size: f.rem(17px);
+		font-weight: 500;
+		margin: 0 0 f.rem(14px);
+	}
+
+	&__content {
+		line-height: 1.6;
+		font-size: f.rem(14px);
+
+		a {
+			color: inherit;
+		}
+	}
+}
+
+.promo-banner {
+	margin-bottom: f.rem(10px);
+
+	&__link {
+		display: block;
+		margin: 0 auto;
+		max-width: f.rem(1200px);
+		position: relative;
+	}
+
+	&__image {
+		display: block;
+		margin: 0 auto;
+		width: 100%
+	}
+
+	&__dumb-cta {
+		bottom: f.rem(12px);
+		font-family: v.$font-oxygen;
+		padding: f.rem(10px) f.rem(15px);
+		position: absolute;
+	}
+}
+
+.load-more-btn {
+	grid-column: 1/-1;
+	line-height: 2.5;
+	font-size: f.rem(16px);
+	font-weight: map-get(maps.$font-weights, normal);
+	margin: f.rem(48px) auto;
+	max-width: f.rem(320px);
+}
+
+.banner-card {
+	background: $banner-background;
+
+	&__content {
+		padding: f.rem(15px);
+		text-align: center;
+	}
+
+	&__title{
+		font-size: f.rem(23px);
+		font-weight: $banner-title-font-weight;
+		margin-bottom: f.rem(10px);
+	}
+
+	&__info {
+		margin-bottom: f.rem(20px);
+		font-size: f.rem(15px);
+		line-height: 1.5;
+	}
+
+	&__btn {
+		&:hover{
+			background: $banner-button-hover;
+			border: f.rem(1px) solid $banner-button-color;
+			color: $banner-button-color;
+		}
+	}
+
+	&__img {
+		max-width: 100%;
+	}
+}
+
+@include m.breakpoint(small-tablet-landscape) {
+	.list-page {
+		clear: both;
+		overflow: hidden;
+
+		@supports (grid-gap: 10px) {
+			align-items: flex-start;
+			display: grid;
+			grid-template-columns: f.rem(269px) repeat(3, 1fr);
+			grid-gap: 0 f.rem(64px);
+			overflow: visible;
+		}
+	}
+
+	.page-info,
+	.top-section,
+	.seo-banner {
+		grid-column: 1 / -1;
+	}
+
+	.refinements {
+		display: inherit;
+		float: left;
+		width: 25%;
+
+		@supports (grid-column: 1) {
+			float: none;
+			grid-column: 1;
+			width: auto;
+		}
+	}
+
+	.products {
+		display: flex;
+		margin: f.rem(16px) f.rem(16px) f.rem(16px) 0;
+		flex-wrap: wrap;
+		float: right;
+		width: 70%;
+
+		@supports (grid-column:  2 / -1) {
+			display: grid;
+			margin: 0;
+			float: none;
+			grid-column: 2 / -1;
+			grid-template-columns: repeat(3, 1fr);
+			width: auto;
+		}
+	}
+
+	// Hide all the elements we don't need on bigger viewports
+	.list-page--refinements-open {
+		.close-refinements {
+			display: none;
+		}
+	}
+}
+
+@include m.breakpoint(large-tablet-portrait) {
+	.page-info {
+		display: block;
+		text-align: center;
+		margin-bottom: f.rem(30px);
+
+		&__title {
+			font-size: f.rem(48px);
+			margin-bottom: f.rem(48px);
+		}
+	}
+
+	.promo-banner {
+		background: $promo-banner-background;
+		margin-bottom: f.rem(48px);
+
+		&__image {
+			width: auto;
+		}
+	}
+
+
+}
+
+.quick-links {
+	grid-column: 1/-1;
+	padding-top: f.rem(5px);
+	background-color: $quick-links-background-color;
+	margin-top: f.rem(5px);
+
+	&__list {
+		display: flex;
+		justify-content: center;
+		list-style: none;
+		padding: 0;
+		margin: f.rem(10px) 0 f.rem(5px) 0;
+	}
+
+	&__item {
+		margin-bottom: f.rem(4px);
+		flex-basis: f.rem(100px);
+	}
+
+	&__link {
+		text-decoration: none;
+	}
+
+	&__image {
+		display: flex;
+		flex-basis: auto;
+		justify-content: center;
+		margin: auto;
+		padding: f.rem(5px);
+		background-color: $quick-links-image-background;
+		border-radius: 50%;
+	}
+
+	&__item-title {
+		display: flex;
+		justify-content: center;
+		padding: f.rem(5px);
+		color: $quick-links-text-color;
+		font-size: f.rem(14px);
+		font-weight: map-get(maps.$font-weights, bold);
+	}
+}
+@include m.breakpoint(large-tablet-landscape) {
+	.quick-links {
+		padding-top: f.rem(10px);
+		padding-bottom: f.rem(16px);
+
+		&__item {
+			min-height: f.rem(100px);
+		}
+
+		&__list {
+			margin: f.rem(15px) 0;
+			column-gap: f.rem(30px)
+		}
+
+		&__item-title {
+			font-size: f.rem(16px);
+			flex-basis: auto;
+		}
+
+		&__image {
+			padding: 0;
+			margin-bottom: f.rem(10px);
+		}
+	}
+}

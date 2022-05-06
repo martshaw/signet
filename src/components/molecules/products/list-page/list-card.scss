@@ -1,0 +1,258 @@
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/variables" as v;
+@use "../../../../assets/styles/mixins" as m;
+
+@mixin link {
+	color: inherit;
+	text-decoration: none;
+	max-width: f.rem(267px);
+
+	@supports (display: grid) {
+		max-width: none;
+	}
+}
+
+// Default view
+.product-card {
+	align-items: flex-start;
+	background: v.$component-background-color;
+	display: grid;
+	font-size: f.rem(14px);
+	grid-template-rows: minmax(min-content, max-content) // product image
+    	minmax(min-content, max-content) // shop similar button
+    	1fr // product name
+		min-content // product usp
+		min-content // product ratings
+		minmax(min-content, max-content) // product price
+		minmax(min-content, max-content); // quick view button
+	grid-template-areas: "product-image"
+		"shop-similar"
+		"product-name"
+		"product-usp"
+		"product-ratings"
+		"product-price"
+		"quick-view-btn";
+	height: 100%;
+	transition: box-shadow 250ms ease;
+	box-sizing: border-box;
+	gap: f.rem(8px) 0;
+	max-width: 30%;
+
+	@supports (grid-template-rows: 1fr) {
+		max-width: none;
+	}
+
+	&:hover {
+		box-shadow: 0 0 f.rem(10px) f.rem(10px) v.$plp-product-background-color;
+	}
+
+	&__image-container {
+		// Mainly if the image doesn't load give it a height for small viewports
+		min-height: f.rem(174px);
+		overflow: hidden;
+		position: relative;
+		grid-area: product-image;
+	}
+
+	&__product-name {
+		@include link;
+		grid-area: product-name;
+		padding: 0 f.rem(10px);
+	}
+
+	&__product-price {
+		@include link;
+		grid-area: product-price;
+		height: f.rem(90px); // Giving it a fixed height to help with alignment
+		justify-content: flex-start;
+	}
+
+	@at-root .product-name {
+		align-self: flex-start;
+	}
+
+	@at-root .c-product-similar {
+		grid-area: shop-similar;
+	}
+
+	@at-root .product-usps {
+		grid-area: product-usp;
+		padding-left: f.rem(28px);
+	}
+
+	@at-root .c-product-ratings {
+		grid-area: product-ratings;
+		padding-left: f.rem(10px);
+	}
+
+	@at-root .c-quick-view-button {
+		grid-area: quick-view-btn;
+		margin-bottom: 0;
+	}
+}
+
+.product-image {
+	display: block;
+	margin: 0 auto;
+}
+
+.product-name {
+	font-size: f.rem(16px);
+	color: v.$plp-product-text-color;
+	margin: 0;
+
+	&__tudor {
+		color: v.$plp-product-text-color;
+		padding: f.rem(8px) 0;
+		text-align: center;
+		margin-top: 0;
+		border-top: f.rem(1px) solid v.$plp-tudor-divider;
+		border-bottom: f.rem(1px) solid v.$plp-tudor-divider;
+	}
+}
+
+.product-price {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: f.rem(14px);
+	height: f.rem(42px); // Giving it a fixed height to help with alignment
+	justify-content: space-evenly;
+	padding: f.rem(8px) 0;
+
+	&__current {
+		font-size: f.rem(18px);
+		font-weight: v.$plp-price-font-weight;
+
+		&--on-sale {
+			color: v.$plp-price-on-sale;
+		}
+	}
+
+	&__history {
+		color: v.$plp-product-price-was-color;
+		flex-basis: 100%;
+		flex-grow: 1;
+		margin-bottom: f.rem(6px);
+		text-align: center;
+	}
+
+	&__finance {
+		margin-top: 0;
+	}
+
+	&__finance--important {
+		font-size: f.rem(16px);
+		font-weight: v.$plp-price-font-weight;
+	}
+}
+
+.product-usps {
+	font-size: f.rem(15px);
+	color: v.$switch-text-color;
+	list-style-position: inside;
+	margin: 0;
+	padding-left: f.rem(28px);
+	text-indent: f.rem(-17px);
+}
+
+.product-ratings {
+	height: f.rem(22px);
+
+	&__stars {
+		color: v.$plp-rating-star-color;
+		font-size: f.rem(24px);
+	}
+}
+
+.c-quick-view-button {
+	text-transform: uppercase;
+}
+
+.c-product-similar {
+	font-size: f.rem(14px);
+	color: v.$plp-text-black;
+	justify-content: center;
+}
+
+.syte-button {
+	align-items: center;
+	border: none;
+	display: flex;
+	background: transparent;
+
+	&__icon {
+		height: f.rem(29px);
+		margin-right: f.rem(10px);
+		width: f.rem(28px);
+	}
+}
+
+// List view
+@at-root .products-display--list {
+	.product-card {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: repeat(5, min-content);
+		grid-auto-rows: min-content;
+		grid-gap: f.rem(8px);
+		height: auto;
+		grid-template-areas: "product-image product-name"
+			"product-image product-usp"
+			"product-image product-ratings"
+			"shop-similar shop-similar"
+			"product-price product-price"
+			"quick-view-btn quick-view-btn";
+		padding: f.rem(10px) 0 0;
+	}
+
+	.product-price {
+		justify-content: space-between;
+
+		&__current {
+			flex-basis: auto;
+			flex-grow: initial;
+		}
+	}
+}
+
+@at-root .products-display--column {
+	.product-card {
+		padding: f.rem(10px) 0 0;
+	}
+}
+
+@at-root .products-display--grid {
+	.product-price {
+		&__current {
+			flex-basis: 100%;
+			flex-grow: 1;
+		}
+
+		&__history {
+			text-align: left;
+		}
+	}
+}
+
+@include m.breakpoint(large-tablet-portrait) {
+	.c-product-similar {
+		width: 100%;
+	}
+
+	.products-display--grid .product-price {
+		justify-content: space-evenly;
+
+		&__current {
+			flex-basis: auto;
+			flex-grow: 0;
+		}
+
+		&__finance {
+			margin-top: 0;
+		}
+
+		&__history {
+			text-align: center;
+		}
+	}
+}

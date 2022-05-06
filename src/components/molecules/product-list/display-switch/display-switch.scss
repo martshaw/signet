@@ -1,0 +1,29 @@
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/maps" as maps;
+
+$plp-display-mode-unselected: map-get(maps.$colours, grey2);
+$plp-display-mode-selected: map-get(maps.$colours, black);
+
+.display-switch {
+	align-items: center;
+	display: flex;
+	flex-basis: f.rem(115px);
+	justify-content: space-between;
+
+	&__btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+		height: f.rem(18px);
+		padding: 0;
+
+		svg {
+			fill: $plp-display-mode-unselected;
+			pointer-events: none;
+		}
+
+		&--selected svg {
+			fill: $plp-display-mode-selected;
+		}
+	}
+}

@@ -1,0 +1,10 @@
+@use '../../themes' as t;
+
+.t-error-banner {
+	@extend %t-bg-white;
+	@extend %t-color-error-red;
+
+	&--no-border {
+		@extend %t-border-white;
+	}
+}

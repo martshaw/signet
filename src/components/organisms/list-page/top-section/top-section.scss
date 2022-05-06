@@ -1,0 +1,240 @@
+@use "../../../../assets/styles/variables" as v;
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/mixins" as m;
+@use "../../../../assets/styles/maps" as maps;
+
+@use "../../../../assets/styles/components/buttons/core";
+@use "../../../../assets/styles/components/buttons/primaryBtn";
+
+@use "./clear-refinements" as cr;
+
+@use "~vue-select/src/scss/vue-select.scss" with (
+	$vs-component-line-height: 1.9,
+	$vs-dropdown-z-index: 1
+);
+
+$plp-filter-weight: map-get(maps.$font-weights, medium);
+
+$plp-apply-background: map-get(maps.$colours, white);
+$plp-apply-border: map-get(maps.$colours, black);
+
+$plp-hit-counter-font: v.$font-oxygen;
+$plp-hit-counter-weight: map-get(maps.$font-weights, bold);
+
+$plp-current-refinements-color: map-get(maps.$font-weights, bold);
+$plp-current-refinements-border: map-get(maps.$colours, grey2);
+
+$plp-sort-by-border: map-get(maps.$colours, offWhite);
+
+.top-section {
+	&__filter-switch,
+	&__apply-btn {
+		@extend .c-btn;
+		margin-bottom: f.rem(11px);
+		padding: f.rem(10px) f.rem(23px) f.rem(10px) f.rem(12px);
+	}
+
+	&__filter-switch {
+		@extend .t-primary-btn;
+		align-items: center;
+		display: flex;
+		font-weight: $plp-filter-weight;
+		justify-content: space-between;
+	}
+
+	&__apply-btn {
+		background: $plp-apply-background;
+		border: f.rem(2px) solid $plp-apply-border;
+	}
+
+	&__view-switcher {
+		display: flex;
+		gap: 0 f.rem(16px);
+		justify-content: space-between;
+		margin-bottom: f.rem(16px);
+	}
+}
+
+.hit-counter {
+	margin-bottom: f.rem(15px);
+	text-align: center;
+
+	&__numbers {
+		font-weight: $plp-hit-counter-weight;
+	}
+}
+
+.current-refinement {
+	color: $plp-current-refinements-color;
+	margin-bottom: f.rem(10px);
+
+	&--no-refinements {
+		display: none;
+	}
+
+	&__title {
+		display: block;
+		flex-basis: 100%;
+		font-weight: map-get(maps.$font-weights, bold);
+		margin-bottom: f.rem(12px);
+		text-align: center;
+	}
+
+	&__list {
+		align-items: baseline;
+		display: flex;
+		flex-wrap: wrap;
+		gap: f.rem(7px);
+		margin: 0;
+		list-style: none;
+		padding-left: 0;
+	}
+}
+
+.refinement-item {
+	align-items: baseline;
+	border: f.rem(1px) solid $plp-current-refinements-border;
+	display: flex;
+	font-size: f.rem(14px);
+	line-height: 1.4;
+	padding: f.rem(3px) f.rem(8px);
+	text-transform: capitalize;
+
+	&__btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+}
+
+.clear-refinements {
+	@include cr.current-refinements;
+}
+
+.sort-by {
+	flex-basis: 50%;
+}
+
+.display-switch {
+	max-width: f.rem(210px);
+}
+
+.vs {
+	&__dropdown-toggle {
+		border-radius: 0;
+		border: f.rem(1px) solid $plp-sort-by-border;
+	}
+
+	&__selected,
+	&__dropdown-menu {
+		color: inherit;
+		font-size: f.rem(16px);
+	}
+
+	&__open-indicator {
+		fill: black;
+	}
+}
+
+@include m.breakpoint(large-tablet-portrait) {
+	.top-section {
+		display: flex;
+		justify-content: space-between;
+
+		@supports (grid-template-areas: 'test') {
+			display: grid;
+			grid-template-areas: "filter filter filter"
+				"counter refinement switcher"
+				"clear clear clear";
+		}
+
+		&__view-switcher {
+			grid-area: switcher;
+			flex-direction: column;
+			order: 3;
+		}
+
+		&__filter-switch {
+			grid-area: filter;
+		}
+	}
+
+	.hit-counter {
+		grid-area: counter;
+		order: 1;
+	}
+
+	.current-refinement {
+		grid-area: refinement;
+		order: 2;
+	}
+
+	.clear-refinements {
+		grid-area: clear;
+	}
+
+	.sort-by,
+	.display-switch {
+		flex-basis: auto;
+		margin-bottom: f.rem(10px);
+	}
+}
+
+@include m.breakpoint(small-tablet-landscape) {
+	.top-section__filter-switch,
+	.top-section__apply-btn,
+	.display-switch,
+	.clear-refinements {
+		display: none;
+	}
+
+	.top-section {
+		align-items: baseline;
+		gap: 0 min(1%, #{f.rem(77px)});
+		margin-bottom: f.rem(43px);
+
+		> * {
+			margin-bottom: 0;
+		}
+
+		&__view-switcher {
+			justify-self: flex-end;
+			width: f.rem(210px);
+		}
+	}
+
+	.hit-counter {
+		text-align: left;
+		width: f.rem(270px);
+	}
+
+	.sort-by {
+		margin-bottom: 0;
+	}
+
+	.current-refinement:not(.current-refinement--no-refinements) {
+		align-items: baseline;
+		display: flex;
+		gap: 0 f.rem(24px);
+		max-width: f.rem(600px);
+	}
+
+	.current-refinement__title {
+		flex-basis: auto;
+	}
+
+	.vs {
+		&__selected::before {
+			content: 'Sort by:';
+			margin-right: 1ch;
+		}
+	}
+}
+
+@include m.breakpoint(small-desktop) {
+	.top-section {
+		&__view-switcher {
+			width: f.rem(331px);
+		}
+	}
+}

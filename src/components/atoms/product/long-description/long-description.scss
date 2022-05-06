@@ -1,0 +1,21 @@
+@use "../../../../assets/styles/_variables" as v;
+@use "../../../../assets/styles/_functions" as f;
+
+.c-long-description {
+	line-height: 1.5;
+
+	&__intro-text {
+		font-weight: v.$product-long-description-font-weight;
+		margin-top: 0;
+		margin-bottom: f.rem(5px);
+		display: flex;
+		flex: 100%;
+		overflow: hidden;
+	}
+
+	&__read-more {
+		font-weight: v.$product-long-desc-read-more-font-weight;
+		text-decoration: underline;
+		color: v.$product-long-desc-read-more-text-link;
+	}
+}

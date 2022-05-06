@@ -1,0 +1,15 @@
+@use "../../../assets/styles/_variables" as v;
+@use "../../../assets/styles/_functions" as f;
+
+.emwa{
+	::v-deep &__input {
+		margin-top: f.rem(18px);
+		background: v.$emwa-input-background-color;
+	}
+
+	&__consent {
+		font-size: f.rem(16px);
+		line-height: f.rem(29px);
+		margin-top: f.rem(18px);
+	}
+}

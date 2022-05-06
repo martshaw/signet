@@ -1,0 +1,344 @@
+@use "maps" as maps;
+$_font-open-sans: 'Open Sans', 'Arial', 'Helvetica', Helvetica, sans-serif;
+$_font-oxygen: 'Oxygen', 'Arial', 'Helvetica', Helvetica, sans-serif;
+$_font-helvetica: 'Helvetica', Helvetica, sans-serif;
+
+$site-container-max-width: 1200px;
+
+// TODO (Mark) - Remove this private variable and use the font-weight map directly
+$_font-weights: maps.$font-weights;
+
+// TODO (Mark) - Remove this private variable and use the font-weight map directly
+$_colours: maps.$colours;
+
+$_amethyst: #bcacd5;
+$amethyst: #bcacd5;
+$error-color: #da291c;
+$_error-color: #ca2630;
+$_grey: #484849;
+$dark-grey: map-get($_colours, offBlack);
+
+$page-background-color: #f3f3f3;
+$page-background-color-v2: map-get($_colours, white);
+$border-color: #eee;
+$component-background-color: #fff;
+$sdc-component-background-color: #f3f3f7;
+
+$basket-offer-message: #d5d5d5;
+$basket-remove-product-color: #989898;
+$basket-price-saved-color: #ba3737;
+
+$gift-packaging-border-color: #ccc;
+$modal-overlay-background-color: rgba(72,72,73,.7);
+$gift-packaging-cross-color: #2d2d2d;
+$gift-message-text-color: #545454;
+$gift-packaging-and-price-font-weight: map-get($_font-weights, bold);
+
+$checkout-invalid-entry: $error-color;
+
+$disabled-button-background: #9e9e9e;
+$disabled-button-background-pdp: #dddddd;
+$checkout-disabled-button: #d5d5d5;
+
+$banner-background-color: #bcadc5;
+
+$checkout-box-shadow-color: rgba(148,146,146,.5);
+$checkout-input-border-color: #cecece;
+$checkout-input-placeholder-color: #818181;
+$checkout-required-key: #a52d2d;
+$checkout-in-progress-btn-bg: map-get($_colours, offBlack);
+$checkout-title-bottom-border: map-get($_colours, whisper);
+$checkout-policy-delivery-border: map-get($_colours, silver);
+
+$checkout-flow-header-dot-color: #afb0b0;
+
+$checkout-delivery-location-background-color: #ededed;
+$checkout-delivery-location-active-color: #161616;
+$checkout-delivery-dates-color: #a9a9a9;
+$checkout-font-family: $_font-oxygen;
+$checkout-text-black: map-get($_colours, black);
+
+$font-oxygen:         'Oxygen', 'Arial', 'Helvetica', Helvetica, sans-serif !default;
+$font-open-sans:      'Open Sans', 'Arial', 'Helvetica', Helvetica, sans-serif !default;
+
+$button-font:         $font-oxygen;
+$heading-font:        $font-oxygen;
+$basket-product-font: $font-oxygen;
+$body-font:           $font-open-sans;
+$price-font-color: #da291c;
+
+$input-padding: 16px;
+$input-radio-border-color: #a9a9a9;
+$background-color-fair:#ffffff;
+$background-color-dark:#000000;
+$heading-font-color: #494949;
+$dark-font-color: #000000;
+$text-link: #494949;
+$track-color: #bcacd5;
+$thumb-color: #bcacd5;
+$thumb-radius: 50%;
+$thumb-height: 5px;
+$thumb-width: 5px;
+$gift-message-apply-button-color: #5d5c5c;
+
+$text-black: #000000;
+$text-white: #ffffff;
+$nav-meter-color: #aeaeae;
+$payment--methods--content: #7b7b7b;
+$payment--methods--list: map-get($_colours, silver);
+$paypal-yellow: #ffc439;
+$paypal-blue: #003087;
+$card-paypal-card-form:#696969;
+$checkout-delivery-view-method-small: #787878;
+
+// Modals
+$modal-overlay-background: rgba( 72, 72, 73, .7);
+
+// Atoms
+// Input range
+$track-before-thumb-fill: #dedede;
+$track-after-thumb-fill: $_amethyst;
+$thumb-color: $_amethyst;
+
+$facet-checkbox-font-weight-bold: map-get($_font-weights, bold);
+$filter-toggle-text-font-weight: map-get($_font-weights, bold);
+
+//Product Stock Badge
+$product-stock-badge-font: $_font-open-sans;
+$product-stock-badge-border-color: map-get($_colours, black);
+$product-stock-badge-background-color: map-get($_colours, white);
+
+
+// Molecules
+// Basket Product Card
+$basket-product-card-background: map-get($_colours, white);
+$basket-product-card-font: $_font-open-sans;
+$basket-product-card-offer-background: #5d5c5c;
+$basket-product-card-offer-color: map-get($_colours, white);
+$basket-product-card-sku-color: #545454;
+$basket-product-card-stock-color: $_error-color;
+$basket-product-card-stock-border: $_error-color;
+$basket-product-card-saved-color: #ba3737;
+$basket-product-card-was-color: #989898;
+$basket-product-card-delivery-date-border: map-get($_colours, black);
+
+// Finance plan
+$finance-plan-background: #f4f4f4;
+$finance-plan-color: map-get($_colours, black);
+$finance-plan-font: $_font-helvetica;
+$finance-plan-border-color:  map-get($_colours, black);
+
+// Finance lines
+$finance-links-color: map-get($_colours, black);
+
+// Store details
+$store-detail-font-weight-emphasis: map-get($_font-weights, medium);
+$store-detail-name-color: map-get($_colours, black);
+$store-detail-distance-font-weight: map-get($_font-weights, light);
+$store-detail-distance-color: $_grey;
+$store-detail-view-map-btn: map-get($_font-weights, light);
+$store-detail-telephone-font-weight: map-get($_font-weights, semibold);
+$store-detail-address-with-map-font-weight: map-get($_font-weights, bold);
+$store-detail-opening-days-font-weight: map-get($_font-weights, semiBold);
+
+// Store list
+$store-list-border-color: map-get($_colours, offWhite);
+$store-list-title-font-weight: map-get($_font-weights, bold);
+
+// Warranty
+$warranty-bold-weight: map-get($_font-weights, semiBold);
+$warranty-weight-medium: map-get($_font-weights, medium);
+$warranty-font-family: $_font-oxygen;
+$warranty-keyline: map-get($_colours, neutralGrey);
+$warranty-error: map-get($_colours, error);
+$warranty-monthly-box-border: map-get($_colours, offWhite);
+
+// Warranty summary
+$warranty-summary-border-color: $_amethyst;
+$warranty-summary-basket-border-color: #9e9e9e;
+$warranty-summary-basket-border-top-color: #d5d5d5;
+$warranty-summary-content-color: $_grey;
+$warranty-product-info-border: map-get($_colours, neutralGrey);
+
+// Warranty inclusions/exclusions
+$warranty-benefits-inactive-tab-background: map-get($_colours, neutralGrey);
+$warranty-benefits-border-color: map-get($_colours, grey2);
+$warranty-benefits-background-color: map-get($_colours, white);
+$warranty-benefits-color: map-get($_colours, black);
+$warranty-tab-font-weight: map-get($_font-weights, semiBold);
+
+// Warranty TnC
+$warranty-tnc-border-color: $_amethyst;
+$warranty-checkbox-border-color: map-get($_colours, grey3);
+$warranty-black-color: map-get($_colours, black);
+$warranty-white-color: map-get($_colours, white);
+$warranty-tnc-font-weight-bold: map-get($_font-weights, bold);
+
+// Warranty Order Summary
+$warranty-line-item-font-weight: map-get($_font-weights, semiBold);
+$warranty-breakdown-font-weight: map-get($_font-weights, semiBold);
+
+// Warranty Configuration
+$warranty-configuation-font-weight: map-get($_font-weights, regular);
+$warranty-configuation-font-weight-bold: map-get($_font-weights, bold);
+
+// Finance calculator
+$finace-calculator-border-color: $_amethyst;
+$finance-overview-border-color: map-get($_colours, offWhite);
+$finance-new-price-color: map-get($_colours, onSale);
+$finance-old-price-color: map-get($_colours, grey2);
+$finance-black-color: map-get($_colours, black);
+$finance-white-color: map-get($_colours, white);
+$finance-text-color: #494948;
+$finance-body-font: $font-open-sans;
+$finance-notes-font: $_font-helvetica;
+$finance-bold-font-weight: map-get($_font-weights, bold);
+$finance-regular-font-weight: map-get($_font-weights, regular);
+$finance-background-color: map-get($_colours, neutralGrey);
+
+// Direct Debit
+$direct-debit-address-font-weight: map-get($_font-weights, bold);
+$direct-debit-address-bg-color: map-get($_colours, dividerGrey);
+
+//Soft Credit Search
+$soft-credit-search-header-color: #494948;
+$soft-credit-search-separator-color: #f4f4f4;
+$soft-credit-search-border-color: map-get($_colours, silver);
+$soft-credit-search-select-color: #787878;
+$soft-credit-search-label-color: map-get($_colours, grey);
+$soft-search-credit-green-color: map-get($_colours, green);
+$soft-credit-monthly-payment-font-weight: map-get($_font-weights, bold);
+
+// Site search
+$site-search-field-font: $_font-open-sans;
+$site-search-font-color: map-get($_colours, grey);
+$site-search-icons-magnifying-recolor: map-get($_colours, black);
+$site-search-border-color: map-get($_colours, offWhite);
+$site-search-background: map-get($_colours, white);
+$site-search-btn-color: map-get($_colours, grey1);
+$site-search-headings-font: $_font-oxygen;
+$site-search-headings-color: map-get($_colours, offBlack);
+$site-search-clear-history-btn-color: map-get($_colours, offBlack);
+$site-search-results-color: map-get($_colours, offBlack);
+// Border is for left & right on large viewports
+$site-search-product-border-color: map-get($_colours, grey2);
+// Key lines are border for top & bottom
+$site-search-product-keyline: map-get($_colours, neutralGrey);
+$site-search-close-btn-font-weight: map-get($_font-weights, bold);
+$site-search-syte-color: map-get($_colours, black);
+$site-search-icons-syte-recolor: map-get($_colours, grey3);
+$site-search-drop-down-background: map-get($_colours, white);
+// PLP
+// Refinement section
+$plp-refinement-section-border: map-get($_colours, offWhite);
+$plp-refinement-section-title-color: map-get($_colours, grey);
+$plp-refinement-section-title-weight: map-get($_font-weights, bold);
+
+$plp-text-primary-color: #4d4d4f;
+$plp-text-weight-bold: map-get($_font-weights, bold);
+$plp-chip-border: map-get($_colours, grey2);
+$plp-apply-filter-text-color: map-get($_colours, offBlack);
+$plp-filter-toggle-background-color: #101820;
+$plp-component-background-color: map-get($_colours, white);
+$plp-filter-text-color: map-get($_colours, white);
+$plp-filter-group-scrollbar-track:#efeeec;
+$plp-filter-group-scrollbar-thumb:#d0cdc7;
+$plp-price-filter-checkbox-border:map-get($_colours, black);
+$plp-price-filter-text-color:#4d4d4f;
+$plp-price-filter-symbol-border:map-get($_colours, grey2);
+$plp-price-filter-vue-slide-color:map-get($_colours, pantone);
+$plp-price-filter-vue-slider-rail:map-get($_colours, lightGrey);
+$plp-price-filter-vue-slider-dot-handle:map-get($_colours, white);
+$plp-product-filter-divider:#d0cdc7;
+$plp-product-badge-color:map-get($_colours, pantone);
+$plp-filter-border-color: map-get($_colours, white);
+$plp-background-color: map-get($_colours, white);
+$plp-filter-font-weight: map-get($_font-weights, bold);
+$plp-font-weight: map-get($_font-weights, medium);
+$plp-rating-star-color: map-get($_colours, sunGlow);
+$plp-text-black: map-get($_colours, black);
+$plp-product-background-color: map-get($_colours, neutralGrey);
+$plp-product-price-was-color: #989898;
+$plp-product-price-ifc-color: map-get($_colours, grey);
+$plp-price-font-weight: map-get($_font-weights, bold);
+$plp-filter-font-family: $_font-oxygen;
+$plp-price-on-sale: map-get($_colours, onSale);
+$plp-tudor-divider: map-get($_colours, dividerGrey);
+$plp-product-text-color: map-get($_colours, grey);
+$plp-seo-links-mobile-bg: map-get($_colours, neutralGrey);
+$plp-seo-links-divider-border: map-get($_colours, black);
+
+// Switch button
+$switch-text-color: map-get($_colours, grey);
+$switch-primary-color: map-get($_colours, pantone);
+
+// CheckBox
+$checkbox-border-color: map-get($_colours, lightGrey);
+$checkbox-border-color--checked: map-get($_colours, black);
+$checkbox-checkmark-color: map-get($_colours, black);
+
+//Product Price
+$productprice-current: #dd223b;
+
+// Store portal finance calculator
+$portal-finance-font: $_font-oxygen;
+$portal-finance-font-weight-normal: map-get($_font-weights, regular);
+$portal-finance-modal-box-border: map-get($_colours, black);
+$portal-finance-modal-yes-btn-bg: map-get($_colours, black);
+$portal-finance-modal-yes-btn-fg: map-get($_colours, white);
+$portal-finance-calc-box-border-color: map-get($_colours, grey2);
+$portal-finance-modal-out-bg: rgba(0,0,0,.4);
+$portal-finance-modal-box-bg: map-get($_colours, white);
+$portal-finance-page-bg: map-get($_colours, white);
+$portal-finance-box-radius: 5px;
+$portal-finance-font-weight-bold: map-get($_font-weights, bold);
+$portal-finance-header-border-color: map_get($_colours, lightGrey);
+$portal-finance-error-color: map_get($_colours, error);
+$portal-finance-apply-bg: $_amethyst;
+$portal-finance-apply-bg-disabled: $disabled-button-background;
+$portal-finance-apply-fg: map-get($_colours, white);
+$portal-finance-table-bottom-border: map-get($_colours, silver);
+// Price Promise Web Form
+$price-promise-font-color: map-get($_colours, grey);
+$price-promise-background-color: map-get($_colours, white);
+$price-promise-title-font: $_font-oxygen;
+$price-promise-body-font: $_font-open-sans;
+$price-promise-border-color: map-get($_colours, silver);
+$price-promise-select-color: #787878;
+
+// Email me when available
+$emwa-font: $_font-oxygen;
+$emwa-background-color: map-get($_colours, neutralGrey);
+$emwa-input-background-color: map-get($_colours, white);
+$emwa-error-text-color: map-get($_colours, error);
+$emwa-font-weight-bold:  map-get($_font-weights, bold);
+$emwa-error-font: $_font-open-sans;
+$emwa-text-font-color: map-get($_colours, black);
+
+//Trust Pilot Popup Model box
+$trust-pilot-popup-title-color: map-get($_colours, grey);
+$trust-pilot-popup-btn-color: map-get($_colours, black);
+$trust-pilot-popup-btn-font-weight: map-get($_font-weights, bold);
+// Quick-view Model
+$quick-view-modal-font-color: map-get($_colours, grey1);
+$quick-view-modal-font-family: $font-oxygen;
+$quick-view-rating-total-reviewers: $dark-grey;
+
+// Product Gallery
+$pagination-page-background-color: map-get($_colours, black);
+
+// Product Information
+$product-information-divider-color: map-get($_colours, silver);
+$product-info-ratings-text-color: $text-black;
+$product-info-ratings-finance-color:  map-get($_colours, black);
+
+// Ring Size
+$product-ring-size-font-weight: map-get($_font-weights, semiBold );
+
+// Long Description
+$product-long-description-font-weight: map-get($_font-weights, regular);
+$product-long-desc-read-more-font-weight: map-get($_font-weights, semiBold );
+$product-long-desc-read-more-text-link: $text-link;
+
+// Product step up down
+$product-step-up-down-fontWeight: map-get($_font-weights, semiBold );

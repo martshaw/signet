@@ -1,0 +1,285 @@
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/maps" as maps;
+@use "../../../../assets/styles/mixins" as m;
+@use "../../../../assets/styles/utilities";
+
+@use "../../../organisms/list-page/top-section/clear-refinements" as cr;
+@use "~vue-slider-component/lib/theme/default.scss" with (
+	$themeColor: map-get(maps.$colours, pantone),
+	$dotBgColor: map-get(maps.$colours, pantone),
+	$dotShadow: 0 0 1px 1px white
+);
+
+$border: map-get(maps.$colours, offWhite);
+$brand-colour: map-get(maps.$colours, pantone);
+
+$current-price-input-border: map-get(maps.$colours, grey2);
+$star-colour: map-get(maps.$colours, sunGlow);
+$star-size: f.rem(18px);
+
+$checkbox-color: map-get(maps.$colours, lightgrey);
+
+%refinementLayout {
+	border-bottom: f.rem(1px) solid $border;
+	padding: f.rem(17px) f.rem(15px) f.rem(13px);
+
+	@include m.breakpoint(small-tablet-landscape) {
+		padding-left: 0;
+	}
+}
+
+%ulStyles {
+	padding-left: 0;
+	margin: 0;
+}
+
+%countStyles {
+	font-size: f.rem(12px);
+
+	&::before {
+		content: '('
+	}
+
+	&::after {
+		content: ')'
+	}
+}
+
+.ais-ToggleRefinement--noRefinement,
+.ais-Panel--noRefinement {
+	display: none;
+}
+
+.ais-RangeInput {
+	padding: f.rem(31px) f.rem(10px) 0;
+}
+
+.stock-toggle {
+	@extend %refinementLayout;
+
+	&__label {
+		align-items: center;
+		display: flex;
+		font-weight: map-get(maps.$font-weights, bold);
+		justify-content: space-between;
+	}
+
+	&__count {
+		display: none;
+	}
+
+	&__input {
+		@extend .u-visually-hidden;
+	}
+
+	&__thumb {
+		background: $brand-colour;
+		border: f.rem(1px) solid $brand-colour;
+		border-radius: f.rem(25px);
+		display: block;
+		height: f.rem(28px);
+		left: 0;
+		top: 0;
+		width: f.rem(28px);
+		position: absolute;
+		transition: transform .4s linear;
+	}
+
+	&__switch {
+		align-items: center;
+		background: map-get(maps.$colours, white);
+		border-radius: f.rem(32px);
+		border: f.rem(1px) solid $brand-colour;
+		cursor: pointer;
+		display: inline-flex;
+		height: f.rem(30px);
+		justify-content: space-around;
+		position: relative;
+		transition: background .4s linear;
+		width: f.rem(70px);
+
+		&--on {
+			color: map-get(maps.$colours, white);
+		}
+
+		&--on,
+		&--off {
+			font-weight: map-get(maps.$font-weights, bold);
+			line-height: 0;
+			opacity: 0;
+			transition: opacity .2s linear;
+		}
+	}
+
+	&__input:checked ~ &__switch--on,
+	&__input:not(input:checked) ~ &__switch--off {
+		opacity: 1;
+	}
+
+	&__input:checked ~ &__thumb {
+		border-color: map-get(maps.$colours, white);
+		transform: translateX(#{f.rem(40px)});
+	}
+}
+
+.facet-category {
+	@extend %refinementLayout;
+
+	&__title {
+		align-items: center;
+		display: flex;
+		font-weight: map-get(maps.$font-weights, bold);
+		list-style: none;
+		justify-content: space-between;
+	}
+
+	&__icon {
+		height: f.rem(19px);
+		width: f.rem(19px);
+	}
+
+	&__content {
+		margin-top: f.rem(13px);
+		max-height: f.rem(250px);
+		overflow: auto;
+	}
+
+	// This is to hide the triangle in the summary tag,
+	// this is only needed for Safari
+	&__title::-webkit-details-marker {
+		display: none;
+	}
+}
+
+.on-sale,
+.facet-menu {
+	svg {
+		color: white;
+		border: 1px solid $checkbox-color;
+		height: f.rem(19px);
+		margin-right: f.rem(16px);
+		width: f.rem(19px);
+
+		path {
+			transform: scale(.8);
+			transform-origin: center;
+		}
+	}
+
+	input:checked + svg {
+		color: black;
+		border-color: black;
+	}
+
+	&__search {
+		margin-bottom: f.rem(16px);
+	}
+
+	&__search-input {
+		border: f.rem(1px) solid $checkbox-color;
+		box-sizing: border-box;
+		padding: f.rem(8px) f.rem(16px);
+		width: 100%;
+
+		&:focus {
+			border-color: black;
+		}
+	}
+}
+
+.on-sale {
+	align-items: center;
+	display: flex;
+	font-weight: map-get(maps.$font-weights, bold);
+}
+
+.facet-menu,
+.ratings {
+	@extend %ulStyles;
+
+	&__item {
+		color: inherit;
+		font-size: f.rem(14px);
+		list-style: none;
+		margin-bottom: f.rem(11px);
+	}
+
+	&__link {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	&__label {
+		align-items: center;
+		display: flex;
+		gap: 0 f.rem(5px);
+	}
+
+	&__count {
+		@extend %countStyles;
+	}
+}
+
+.price-range {
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: f.rem(21px);
+
+	@supports (justify-content: space-evenly) {
+		justify-content: space-evenly;
+	}
+
+	&__separator {
+		display: none;
+	}
+
+	&__button {
+		opacity: 0;
+	}
+
+	&__manual-input {
+		border: f.rem(1px) solid $current-price-input-border;
+		font-weight: map-get(maps.$font-weights, bold);
+		padding: 0 f.rem(7px);
+		width: f.rem(90px);
+	}
+
+	&__input {
+		border: 0;
+		font-weight: map-get(maps.$font-weights, bold);
+		padding: f.rem(7px) 0;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			appearance: none;
+		}
+	}
+}
+
+.remove-refinements {
+	@include cr.current-refinements;
+	display: none;
+
+	&--no-refinements {
+		display: none;
+	}
+}
+
+.ratings {
+	&__stars {
+		fill: $star-colour;
+		width: $star-size;
+		height: $star-size;
+	}
+
+	&__label {
+		display: inline;
+		margin-left: 1ch;
+	}
+}
+
+@include m.breakpoint(small-tablet-landscape) {
+	.remove-refinements {
+		display: block;
+	}
+}

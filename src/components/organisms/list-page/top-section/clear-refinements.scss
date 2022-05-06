@@ -1,0 +1,23 @@
+@use "../../../../assets/styles/functions" as f;
+@use "../../../../assets/styles/maps" as maps;
+
+$plp-clear-color: map-get(maps.$colours, grey5);
+
+@mixin current-refinements {
+	margin-bottom: f.rem(30px);
+
+	&__btn {
+		background: none;
+		border: none;
+		color: $plp-clear-color;
+		cursor: pointer;
+		font-size: f.rem(14px);
+		margin: 0;
+		padding: 0;
+		text-decoration: underline;
+
+		&--disable {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,11 @@
+@use "../../../../assets/styles/variables" as v;
+@use "../../../../assets/styles/functions" as f;
+
+.c-product-ratings {
+	height: f.rem(22px);
+
+	&__stars {
+		color: v.$plp-rating-star-color;
+		font-size: f.rem(24px);
+	}
+}

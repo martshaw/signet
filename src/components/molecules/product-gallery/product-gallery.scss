@@ -1,0 +1,78 @@
+@use "../../../assets/styles/_variables"as v;
+@use "../../../assets/styles/_functions"as f;
+@use "../../../assets/styles/_mixins"as m;
+
+.c-product-gallery {
+	&__splide {
+		max-width: f.rem(320px);
+		margin: 0 auto;
+		padding: 0 f.rem(25px);
+
+		&__arrow {
+			background: none;
+
+			&--prev {
+				left: 0;
+			}
+
+			&--next {
+				right: 0
+			}
+
+			&--hidden {
+				visibility: hidden;
+				pointer-events: none;
+			}
+		}
+
+		&__pagination {
+			&__page {
+				opacity: 1;
+
+				/* stylelint-disable selector-max-class*/
+				&.is-active {
+					background: v.$pagination-page-background-color;
+					transform: none;
+				}
+			}
+		}
+	}
+
+	&__image {
+		margin: f.rem(30px) auto;
+		max-width: f.rem(320px);
+		width: 100%;
+	}
+
+	&__video {
+		transform: translateY(50%);
+		margin: 0 auto;
+		max-width: f.rem(320px);
+	}
+}
+
+.splide {
+	&__list {
+		will-change: unset;
+	}
+}
+
+@include m.breakpoint(large-handset-landscape) {
+	.c-product-gallery {
+		&__splide,
+		&__image,
+		&__video {
+			max-width: f.rem(376px);
+		}
+	}
+}
+
+@include m.breakpoint(small-tablet-landscape) {
+	.c-product-gallery {
+		&__splide,
+		&__image,
+		&__video {
+			max-width: f.rem(416px);
+		}
+	}
+}

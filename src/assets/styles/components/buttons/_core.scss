@@ -1,0 +1,55 @@
+@use "../../functions" as f;
+@use "../../variables" as v;
+@use "../../mixins" as m;
+
+/*
+  This class can be use on both `button` and `anchor` tag to give the impression
+  that the element is in fact a button.
+  This class is just the base styling, it is meant to be use with another class
+  like `t-primary-btn`
+
+  Max-height of buttons should be know bigger than
+    large viewport
+      small size button = 40
+      large size button = 56
+
+    small viewport
+      small size button = 40
+      large size button = 46
+  base on checkout designs
+ */
+
+.c-btn {
+	border: f.rem(3px) solid;
+	box-sizing: border-box;
+	cursor: pointer; // This isn't needed for links just buttons
+	display: inline-block; // This one isn't needed for buttons just links
+	font-family: v.$button-font;
+	font-weight: 700;
+	font-size: f.rem(15px);
+	padding: f.rem(8px) 0;
+	text-decoration: none; // This one isn't needed for buttons
+	text-align: center;
+	width: 100%;
+
+	&--large {
+		font-size: f.rem(19px);
+		padding: f.rem(9px) 0;
+	}
+
+	&:disabled {
+		background: v.$disabled-button-background;
+		border-color: v.$disabled-button-background;
+		color: white;
+		outline: 0;
+		pointer-events: none;
+	}
+}
+
+@include m.breakpoint(large-handset-landscape) {
+	.c-btn--large {
+		padding: f.rem(14px) 0;
+		max-height: f.rem(56px);
+	}
+}
+

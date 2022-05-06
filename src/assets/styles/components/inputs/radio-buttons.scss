@@ -1,0 +1,20 @@
+@use "../../variables" as v;
+@use "../../functions" as f;
+
+.radio-input {
+	appearance: none;
+	background-clip: content-box;
+	border: f.rem(1px) solid black;
+	border-radius: 50%;
+	height: f.rem(15px);
+	outline: none;
+	padding: f.rem(1px);
+	margin-right: f.rem(10px);
+	width: f.rem(15px);
+}
+
+.radio-input:checked {
+	background-color: black;
+	border-radius: 50%;
+	outline: none
+}

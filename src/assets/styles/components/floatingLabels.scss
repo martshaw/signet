@@ -1,0 +1,69 @@
+@use "../variables" as v;
+@use "../functions" as f;
+
+$_transition-timing: 100ms;
+
+::-webkit-input-placeholder {
+	opacity: 0;
+}
+
+::-moz-placeholder {
+	opacity: 0;
+}
+
+:-ms-input-placeholder {
+	opacity: 0;
+}
+
+.c-floating-label {
+	position: relative;
+	display: grid;
+	grid-gap: f.rem(2px);
+
+	label {
+		pointer-events: none;
+		position: absolute;
+		left: f.rem(v.$input-padding);
+		top: f.rem(v.$input-padding);
+
+		@media (prefers-reduced-motion: no-preference) {
+			transition: transform ease-in $_transition-timing,
+				background ease-in $_transition-timing,
+				font-size ease-in $_transition-timing;
+		}
+	}
+
+	// For browser that don't support :placeholder-show or selector use this.
+	input + label {
+		background: white;
+		font-size: f.rem(12px);
+		padding: 0 f.rem(5px);
+		transform: translate(f.rem(-4px), -1.4rem);
+	}
+
+	// The compiler blows up id we don't do it this way.
+	@supports #{'\selector(input:placeholder-shown)'} {
+
+		// Reset the supporting browsers
+		input + label {
+			background: transparent;
+			font-size: initial;
+			transform: none;
+		}
+
+		input:not(:placeholder-shown) + label {
+			background: white;
+			font-size: f.rem(12px);
+			padding: 0 f.rem(5px);
+			transform: translate(f.rem(-4px), -1.4rem);
+		}
+	}
+
+	&--error::v-deep input {
+		outline: f.rem(1px) v.$checkout-invalid-entry solid;
+	}
+
+	&--error::v-deep {
+		color: v.$checkout-invalid-entry;
+	}
+}

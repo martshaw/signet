@@ -1,0 +1,74 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    // "src/**/*.vue",
+
+    // Atoms
+    "src/components/atoms/btn/DisplayMode.vue",
+    "src/components/atoms/btn/FilterSwitch.vue",
+    "src/components/atoms/btn/ApplyFilter.vue",
+    "src/components/atoms/btn/CloseCross.vue",
+    "src/components/atoms/btn/AisToggle.vue",
+    "src/components/atoms/form-controls/SortBy.vue",
+    "src/components/atoms/counters/ProductsReturned.vue",
+    "src/components/atoms/filter-chip/FilterChip.vue.vue",
+    "src/components/atoms/accordion/RefinementAccordion.vue",
+    "src/components/atoms/email-me-when-available/EmailMeWhenAvailableConsent.vue",
+    "src/components/atoms/product/AdaptiveProductImage.vue",
+    "src/components/atoms/product/CurrentPrice.vue",
+    "src/components/atoms/product/PriceHistory.vue",
+    "src/components/atoms/product/PriceInstallments.vue",
+    "src/components/atoms/banners/PromoBanner.vue",
+    "src/components/atoms/banners/SeoBanner.vue",
+    "src/components/atoms/quick-links/QuickLinks.vue",
+
+    // Molecules
+    "src/components/molecules/products/list-page/ListCard.vue",
+    "src/components/molecules/product-list/display-switch/DisplaySwitch.vue",
+    "src/components/molecules/payment/DirectDebitAddress.vue",
+    "src/components/molecules/basket-summarys/PaymentBreakdown.vue",
+    "src/components/molecules/payment/BarclayPaymentForm.vue",
+
+    // Organisms
+    "src/components/organisms/list-page/top-section/TopSection.vue",
+    "src/components/organisms/list-page/facets/ProductFacets.vue",
+
+    // Views
+    "src/views/productListing/ListPage.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

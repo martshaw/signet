@@ -1,0 +1,7 @@
+/*
+ * Converts a px value into a rem value.
+ * @param $px - a value in pixels.
+ */
+@function rem($px) {
+	@return ($px / 16px) * 1rem;
+}

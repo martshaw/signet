@@ -1,0 +1,15 @@
+@use "core";
+@use '../../variables' as v;
+@use '../../functions' as f;
+
+$_main-button-background-color: white;
+
+.t-white-btn {
+	border-color: v.$checkout-input-border-color;
+	background: $_main-button-background-color;
+	color: black;
+
+	&--rounded {
+		border-radius: f.rem(2px);
+	}
+}

@@ -1,0 +1,133 @@
+{
+  "email": {
+    "required": "Please enter your email address",
+    "email": "Please enter a valid email address"
+  },
+  "firstname": {
+    "required": "Please enter your first name",
+    "minLength": "Your first name needs to be at least 2 characters in length",
+    "maxLength": "Your first name should not be greater than 15 characters in length",
+    "pattern": "Please enter a valid name"
+  },
+  "lastname": {
+    "required": "Please enter your last name",
+    "minLength": "Your last name needs to be at least 2 characters in length",
+    "maxLength": "Your last name should not be greater than 30 characters in length",
+    "pattern": "Please enter a valid name"
+  },
+  "fullName": {
+    "required": "Please enter your full name",
+    "minLength": "Your name needs to be at least 2 characters in length",
+    "pattern": "Please enter a valid name"
+  },
+  "contactPhone": {
+    "required": "We need your telephone number in case we need to contact you regarding this order",
+    "phoneRegex": "Please enter a valid telephone number. Please note that, we can only accept telephone numbers between 8-12 digits in length.",
+    "intCode": "This number looks like it may include an international dialling code. Please remember to remove the \"0\" which is reserved for local telephone numbers."
+  },
+  "phoneNumber": {
+    "required": "Please enter your telephone number",
+    "phoneRegex": "We don’t recognise this number. Please enter a number starting with 0 or +44 followed by a 10 digit phone number."
+  },
+  "street": {
+    "required": "Please enter your street address",
+    "maxLength": "Your street should not be greater than 255 characters in length"
+  },
+  "locality": {
+    "maxLength": "Your locality should not be greater than 255 characters in length"
+  },
+  "town": {
+    "required": "Please enter a town name",
+    "pattern": "Please enter a valid town name",
+    "maxLength": "Your town name should not be greater than 255 characters in length"
+  },
+  "postcode": {
+    "required": "Please enter a postcode",
+    "pattern": "Please enter a valid postcode",
+    "capital": "Use capital letters to enter postcode"
+  },
+  "houseNumber": {
+    "required": "Please enter your house number",
+    "maxLength": "Your house number should not be greater than 255 characters in length"
+  },
+  "cardName": {
+    "required": "Please enter your name as it appears on your bank card",
+    "minLength": "Your name must be longer than 2 characters",
+    "pattern": "Please enter a valid name"
+  },
+  "cardNumber": {
+    "required": "Please enter your payment card number",
+    "pattern": "Please enter a valid card number",
+    "minLength": "Minimum 15 digits are allowed",
+    "maxLength": "Maximum 23 digits are allowed"
+  },
+  "cardExpiry": {
+    "required": "Please enter card expiry date",
+    "pattern": "Please enter valid card expiry date in MM/YY format",
+    "hasCardExpired": "It looks like your card has expired"
+  },
+  "pin": {
+    "required": "Please enter the security code on your card",
+    "minLength": "Your card security code must be at least 3 characters",
+    "maxLength": "Your card security code must be no longer than 4 characters",
+    "pattern": "Please enter a valid security code"
+  },
+  "tnc": {
+    "required": "Please confirm that you agree to our terms and conditions"
+  },
+  "fulfilledBasket": {
+    "ifc": "<b> Please note </b>: There has been a change to your basket price total."
+  },
+  "webLink": {
+    "required": "Please enter URL",
+    "url": "Please enter a valid URL"
+  },
+  "price": {
+    "required": "Please enter the item’s price",
+    "maxLength": "The item's price must be no longer than 7 characters",
+    "pattern": "Please enter a valid price. Please note that we can only accept prices with no special characters and alphabets. The price should be of maximum 7 digits in length including 2 digits after the decimal."
+  },
+  "accountNumber": {
+    "required": "Please enter your bank account number",
+    "maxLength": "The account number is incorrect please try again"
+  },
+  "sortCode": {
+    "required": "Please enter a valid Sort Code",
+    "pattern": "Please enter a valid Sort Code"
+  },
+  "paymentDate": {
+    "required": "Please select a payment date",
+    "between": "Please select a payment date"
+  },
+  "ringSize":{
+    "required":"Please select Ring Size"
+  },
+  "day": {
+    "required": "Please enter day of your birth in DD format",
+    "pattern": "Please enter a valid day of your birth in DD format",
+    "minLength": "Please enter a valid day of your birth in DD format",
+    "maxLength": "The day of your birth must be no longer than 2 characters"
+  },
+  "month": {
+    "required": "Please enter month of your birth in MM format",
+    "pattern": "Please enter a valid month of your birth in MM format",
+    "minLength": "Please enter a valid month of your birth in MM format",
+    "maxLength": "The month of your birth must be no longer than 2 characters"
+  },
+  "year": {
+    "required": "Please enter year of your birth in YYYY format",
+    "pattern": "Please enter a valid year of your birth in YYYY format",
+    "minLength": "Please enter a valid year of your birth in YYYY format",
+    "maxLength": "The year of your birth must be no longer than 4 characters"
+  },
+  "annualIncome": {
+    "required": "Please enter your annual income",
+    "pattern": "Please enter valid income. Please note that we can only accept income with no special characters and alphabets.",
+    "maxLength": "The annual income must be no longer than 7 characters"
+  },
+  "dependants": {
+    "required": "Please enter number of your financial dependants",
+    "pattern": "Please enter valid number of your financial dependants",
+    "maxLength": "The number of your financial dependants must be no longer than 2 characters"
+  }
+}

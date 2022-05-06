@@ -1,0 +1,8 @@
+@use '../variables' as v;
+@use '../functions' as f;
+
+.u-site-container {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: f.rem(v.$site-container-max-width);
+}

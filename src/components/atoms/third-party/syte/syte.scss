@@ -1,0 +1,12 @@
+@use '../../../../assets/styles/functions' as f;
+
+.c-syte {
+	cursor: pointer;
+
+	&-icon {
+		path,
+		circle {
+			stroke: currentColor;
+		}
+	}
+}

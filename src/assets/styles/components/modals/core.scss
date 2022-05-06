@@ -1,0 +1,50 @@
+@use "../../variables" as v;
+@use "../../functions" as f;
+@use "../../mixins" as m;
+
+.c-modal {
+	border: f.rem(1px) solid black;
+	top: 1%;
+
+	&::backdrop {
+		background: rgba(72,72,73,.7);
+		border: 1px solid #979797;
+	}
+
+	&__close {
+		align-items: center;
+		background: none;
+		border: f.rem(2px) dotted transparent;
+		border-radius: f.rem(17px);
+		cursor: pointer;
+		display: flex;
+		height: f.rem(34px);
+		justify-content: center;
+		position: absolute;
+		right: f.rem(20px);
+		top: f.rem(13px);
+		width: f.rem(34px);
+
+		svg {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		&:focus-visible {
+			border-color: black;
+			outline: none;
+		}
+	}
+}
+
+dialog + .backdrop {
+	background-color: v.$modal-overlay-background-color;
+}
+
+@include m.breakpoint( small-tablet-portrait ) {
+	.c-modal {
+		top: 5vh;
+	}
+}

@@ -1,0 +1,6 @@
+@use '../../themes' as t;
+
+.t-amethyst-banner {
+	@extend %t-bg-amethyst;
+	@extend %t-border-amethyst;
+}

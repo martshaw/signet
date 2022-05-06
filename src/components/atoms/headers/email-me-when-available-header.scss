@@ -1,0 +1,9 @@
+@use "../../../assets/styles/variables" as v;
+@use "../../../assets/styles/functions" as f;
+
+.emwa-title {
+	font-size: f.rem(19px);
+	font-weight: v.$emwa-font-weight-bold;
+	margin: 0;
+	color: v.$emwa-text-font-color;
+}

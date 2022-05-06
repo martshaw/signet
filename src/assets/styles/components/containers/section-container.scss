@@ -1,0 +1,8 @@
+@use "../../variables" as v;
+@use "../../functions" as f;
+
+.c-section-container {
+	background: v.$component-background-color;
+	box-shadow: 0 f.rem(3px) f.rem(4px) f.rem(1px) v.$checkout-box-shadow-color;
+	padding: f.rem(42px);
+}

@@ -1,0 +1,9 @@
+@use '../../themes' as t;
+
+.t-white-banner {
+	@extend %t-bg-white;
+
+	&--no-border {
+		@extend %t-border-white;
+	}
+}

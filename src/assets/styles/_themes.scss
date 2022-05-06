@@ -1,0 +1,49 @@
+@use 'variables' as v;
+
+%t-bg-black {
+	background-color: black;
+}
+
+%t-border-black {
+	border-color: black;
+}
+
+%t-color-black {
+	color: black;
+}
+
+%t-bg-white {
+	background-color: white;
+}
+
+%t-border-white {
+	border-color: white;
+}
+
+%t-color-white {
+	color: white;
+}
+
+%t-bg-amethyst {
+	background-color: v.$amethyst; // #bcacd5
+}
+
+%t-border-amethyst {
+	border-color: v.$amethyst; // #bcacd5
+}
+
+%t-color-amethyst {
+	color: v.$amethyst; // #bcacd5
+}
+
+%t-bg-error-red {
+	background-color: v.$error-color; // #da291c
+}
+
+%t-border-error-red {
+	border-color: v.$error-color; // #da291c
+}
+
+%t-color-error-red {
+	color: v.$error-color; // #da291c
+}

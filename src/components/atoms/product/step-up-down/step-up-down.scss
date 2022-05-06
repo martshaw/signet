@@ -1,0 +1,51 @@
+@use "../../../../assets/styles/_functions" as f;
+@use "../../../../assets/styles/mixins" as m;
+@use "../../../../assets/styles/_variables" as v;
+
+.product-step-up-down {
+	flex: 100%;
+
+	&__container {
+		display: flex;
+		align-items: stretch;
+		justify-content: space-between;
+	}
+
+	&__heading {
+		margin: 0;
+	}
+
+	&__select {
+		border: none;
+		color: inherit;
+		font-weight: v.$product-step-up-down-fontWeight;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background: url('//d113iaclfvkn13.cloudfront.net/icons/chevron-down.svg') calc(100% - #{f.rem(10px)}) center no-repeat;
+		background-size: f.rem(12px) f.rem(7px);
+		text-align: right;
+		padding-right: f.rem(30px);
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus-visible {
+			outline: none;
+		}
+
+		option[default] {
+			display: none;
+		}
+	}
+}
+
+@include m.breakpoint(large-handset-landscape) {
+	.product-step-up-down {
+		&__select {
+			background-position: calc(100% - #{f.rem(2px)}) center;
+			padding-right: f.rem(20px);
+		}
+	}
+}

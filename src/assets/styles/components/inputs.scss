@@ -1,0 +1,16 @@
+@use "../variables" as v;
+@use "../functions" as f;
+
+input {
+	background: transparent;
+	border: f.rem(1px) solid v.$checkout-input-border-color;
+	box-sizing: border-box;
+	font-size: f.rem(16px);
+	font-family: v.$body-font;
+	padding: f.rem(v.$input-padding);
+	width: 100%;
+
+	&.error {
+		outline: v.$checkout-invalid-entry f.rem(1px) solid;
+	}
+}

@@ -1,0 +1,15 @@
+@use "core";
+@use '../../functions' as f;
+
+$_main-button-background-color: #9f8aff;
+$_main-button-text-color: black;
+
+.t-primary-btn {
+	border-color: $_main-button-background-color;
+	background: $_main-button-background-color;
+	color: $_main-button-text-color;
+
+	&--rounded {
+		border-radius: f.rem(2px);
+	}
+}

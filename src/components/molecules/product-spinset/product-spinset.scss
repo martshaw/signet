@@ -1,0 +1,63 @@
+@use "../../../assets/styles/_functions"as f;
+@use "../../../assets/styles/_mixins"as m;
+
+.c-product-spinset {
+	&__splide {
+		max-width: f.rem(320px);
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+
+	&__product_image {
+		margin: f.rem(30px) auto;
+		max-width: f.rem(320px);
+	}
+}
+
+.splide {
+	&__list {
+		will-change: unset;
+	}
+}
+
+@include m.breakpoint(large-tablet-portrait) {
+	.c-product-spinset {
+		&__splide {
+			max-width: f.rem(296px);
+			padding: 0;
+		}
+
+		&__product_image {
+			max-width: f.rem(296px);
+		}
+	}
+}
+
+@include m.breakpoint(large-handset-landscape) {
+	.c-product-spinset {
+		&__splide,
+		&__product_image {
+			max-width: f.rem(376px);
+			margin: f.rem(25px) auto;
+		}
+	}
+}
+
+@include m.breakpoint(small-tablet-landscape) {
+	.c-product-spinset {
+		&__splide,
+		&__product_image {
+			max-width: f.rem(456px);
+			margin: f.rem(10px) auto;
+		}
+	}
+}
+
+@include m.breakpoint(small-desktop) {
+	.c-product-spinset {
+		&__splide,
+		&__product_image {
+			max-width: f.rem(480px);
+		}
+	}
+}
