@@ -1,7 +1,5 @@
 
 src/.DS_Store
-public/product-list-page.hbs
-public/resources/seoUrls.json
 src/components/.DS_Store
 yarn.lock
 node_modules/
