@@ -208,27 +208,90 @@
     },
 
     data () {
+      function createSortedCache (options = { serializable: true }) {
+        let cache: Record<
+          string,
+          typeof options['serializable'] extends true ? string : any
+        > = {};
+
+        // this part here is customized to sort the keys
+        function serialize (key: object | string) {
+          console.log('serialize pre', key);
+
+          if (
+            typeof key === 'object' &&
+            (key as any).request.path === '1/indexes/*/queries'
+          ) {
+            const object: any = key;
+
+            return JSON.stringify({
+              ...object,
+              request: {
+                ...object.request,
+                data: {
+                  ...object.request.data,
+                  requests: object.request.data.requests.map((request: any) => ({
+                    ...request,
+                    params: request.params.split('&').sort().join('&')
+                  }))
+                }
+              }
+            });
+          }
+          return JSON.stringify(key);
+        }
+
+        return {
+          get<TValue> (
+            key: object | string,
+            defaultValue: () => Readonly<Promise<TValue>>,
+            events: { miss: (value: TValue) => Promise<any> } = {
+              miss: () => Promise.resolve()
+            }
+          ) {
+            const keyAsString = serialize(key);
+            if (keyAsString in cache) {
+              return Promise.resolve(
+                options.serializable
+                  ? JSON.parse(cache[keyAsString])
+                  : cache[keyAsString]
+              );
+            }
+            const promise = defaultValue();
+            const miss = (events && events.miss) || (() => Promise.resolve());
+            return promise.then((value) => miss(value)).then(() => promise);
+          },
+          set<TValue> (
+            key: object | string,
+            value: TValue
+          ): Readonly<Promise<TValue>> {
+            cache[serialize(key)] = options.serializable
+              ? JSON.stringify(value)
+              : value;
+            return Promise.resolve(value);
+          },
+          delete (key: object | string) {
+            delete cache[serialize(key)];
+            return Promise.resolve();
+          },
+          clear () {
+            cache = {};
+            return Promise.resolve();
+          }
+        };
+      }
+
       return {
         searchClient: algoliasearch(
           window.Signet.VUE_APP_ALGOLIA_APP_ID as string,
-          window.Signet.VUE_APP_ALGOLIA_APP_KEY as string
+          window.Signet.VUE_APP_ALGOLIA_APP_KEY as string,
+          {
+            // casted as any here, it's just to show the idea
+            requestsCache: createSortedCache() as any,
+            responsesCache: createSortedCache({ serializable: false }) as any
+          }
         ),
         routing: listPageRouter,
-        // routing: {
-        //   router: historyRouter(),
-        //   stateMapping: {
-        //     stateToRoute (uiState) {
-        //       const indexUiState = uiState.dev_ERNEST_JONES_products || {};
-        //       console.log('uiStates', uiState, this.indexName);
-        //       return {
-        //         query: indexUiState?.query
-        //       };
-        //     },
-        //     routeToState (routeState) {
-        //       console.log('routeState', routeState, routeState.q);
-        //     }
-        //   }
-        // },
         middlewares: [
           () => {
             return {
