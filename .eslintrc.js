@@ -12,7 +12,7 @@ module.exports = {
     parser: '@typescript-eslint/parser'
   },
 
-  rules: require('../eslint-vue-rules'),
+  rules: require('./eslint-vue-rules'),
   ignorePatterns: ['src/assets/scripts/regexPatterns.js'],
 
   overrides: [
