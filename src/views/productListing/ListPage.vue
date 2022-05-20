@@ -1,14 +1,14 @@
 <template>
   <ais-instant-search
-      :search-client="searchClient"
-      :index-name="indexName"
-      :routing="routing"
-      :middlewares="middlewares"
+    :search-client="searchClient"
+    :index-name="indexName"
+    :routing="routing"
+    :middlewares="middlewares"
   >
     <ais-configure
-        :filters="facetFilters"
-        :faceting-after-distinct.camel="true"
-        :click-analytics.camel="true"
+      :filters="facetFilters"
+      :faceting-after-distinct.camel="true"
+      :click-analytics.camel="true"
     />
     <!--
       We have to have this search box otherwise search query's don't work
@@ -16,15 +16,15 @@
     <ais-search-box hidden />
 
     <promo-banner
-        v-if="readMainBanner.imageURL"
-        :banner="readMainBanner"
-        class="promo-banner"
+      v-if="readMainBanner.imageURL"
+      :banner="readMainBanner"
+      class="promo-banner"
     />
 
     <div
-        class="list-page"
-        :class="listPageClasses"
-        :data-insights-index="indexName"
+      class="list-page"
+      :class="listPageClasses"
+      :data-insights-index="indexName"
     >
       <div class="page-info">
         <h1 class="page-info__title">
@@ -32,76 +32,76 @@
         </h1>
 
         <close-cross
-            size="20"
-            class="close-refinements"
-            @click="closeRefinements"
+          size="20"
+          class="close-refinements"
+          @click="closeRefinements"
         />
 
         <p
-            v-if="readSeoBanner.intro"
-            class="page-info__text"
+          v-if="readSeoBanner.intro"
+          class="page-info__text"
         >
           {{ readSeoBanner.intro }}
 
           <a
-              v-if="readSeoBanner.body"
-              href="#seo-banner"
-              class="page-info__jump"
+            v-if="readSeoBanner.body"
+            href="#seo-banner"
+            class="page-info__jump"
           >
             Read more
           </a>
         </p>
         <quick-links
-            v-if="quickLinks"
-            :links="quickLinks"
+          v-if="quickLinks"
+          :links="quickLinks"
         />
       </div>
 
       <top-section
-          :excluded-attributes="clearRefinementsIgnoreList"
-          @analyticsFilterInteraction="filterInteraction"
+        :excluded-attributes="clearRefinementsIgnoreList"
+        @analyticsFilterInteraction="filterInteraction"
       />
 
       <product-facets
-          :excluded-attributes="clearRefinementsIgnoreList"
-          @analyticsFilterInteraction="resultsInteraction"
+        :excluded-attributes="clearRefinementsIgnoreList"
+        @analyticsFilterInteraction="resultsInteraction"
       />
 
       <ais-infinite-hits
-          :escape-h-t-m-l="false"
-          :transform-items="transformProducts"
-          class="products"
-          :class="productClassObj"
+        :escape-h-t-m-l="false"
+        :transform-items="transformProducts"
+        class="products"
+        :class="productClassObj"
       >
         <template v-slot="{items, results, isLastPage, refineNext}">
           <template v-for="(product, index) in items">
             <in-grid
-                v-if="showInGridBanners(index)"
-                :key="`${product.parentSku}-banner`"
-                :banner="getInGridBanners(index)"
+              v-if="showInGridBanners(index)"
+              :key="`${product.parentSku}-banner`"
+              :banner="getInGridBanners(index)"
             />
 
             <list-card
-                :key="product.parentSku"
-                :product="product"
-                :position="index"
-                :results="results"
-                :corner-flags-rules="cornerFlags"
-                @send-select-event="sendSelectItem(product, index)"
+              :key="product.parentSku"
+              :product="product"
+              :position="index"
+              :results="results"
+              :corner-flags-rules="cornerFlags"
+              @send-select-event="sendSelectItem(product, index)"
             />
           </template>
 
           <button
-              v-show="!isLastPage"
-              class="c-btn t-red-btn load-more-btn"
-              @click="refineNext"
+            v-show="!isLastPage"
+            class="c-btn t-red-btn load-more-btn"
+            @click="refineNext"
           >
             Show more results
           </button>
 
           <ais-state-results v-show="items.length === 0">
             <template
-                v-slot="{state: {query}}"
+              v-slot="{state: {query}}"
             >
               Sorry, we can't find results for "{{ query }}"
             </template>
@@ -110,10 +110,10 @@
       </ais-infinite-hits>
 
       <seo-banner
-          v-if="readSeoBanner.body"
-          id="seo-banner"
-          ref="seoBanner"
-          class="seo-banner"
+        v-if="readSeoBanner.body"
+        id="seo-banner"
+        ref="seoBanner"
+        class="seo-banner"
       >
         <template #heading>
           <h2 class="seo-banner__title">
@@ -124,8 +124,8 @@
         <template #body>
           <!-- eslint-disable vue/no-v-html -->
           <div
-              class="seo-banner__content"
-              v-html="readSeoBanner.body"
+            class="seo-banner__content"
+            v-html="readSeoBanner.body"
           />
           <!-- eslint-enable vue/no-v-html -->
         </template>
@@ -187,7 +187,14 @@
   import ProductFacets from '@/components/organisms/list-page/facets/ProductFacets.vue';
   import TopSection from '@/components/organisms/list-page/top-section/TopSection.vue';
   /* eslint-enable max-len, vue/max-len */
-
+  import CloseCross from '@/components/atoms/btn/CloseCross.vue';
+  import SeoBanner from '@/components/atoms/banners/SeoBanner.vue';
+  import PromoBanner from '@/components/atoms/banners/PromoBanner.vue';
+  import QuickView from
+    '@/components/molecules/quick-view-modal/QuickViewModal.vue';
+  import InGrid from
+    '@/components/atoms/product-list/banners/IngridBanner.vue';
+  import QuickLinks from '@/components/atoms/quick-links/QuickLinks.vue';
   export default Vue.extend({
     name: 'ListPage',
 
@@ -195,30 +202,12 @@
       ProductFacets,
       TopSection,
       ListCard,
-      CloseCross: () => import(
-          /* webpackChunkName: "close-cross" */
-          '@/components/atoms/btn/CloseCross.vue'
-          ),
-      SeoBanner: () => import(
-          /* webpackChunkName: "seo-banner" */
-          '@/components/atoms/banners/SeoBanner.vue'
-          ),
-      PromoBanner: () => import(
-          /* webpackChunkName: "promo-banner" */
-          '@/components/atoms/banners/PromoBanner.vue'
-          ),
-      QuickView: () => import(
-          /* webpackChunkName: "quick-view-modal" */
-          '@/components/molecules/quick-view-modal/QuickViewModal.vue'
-          ),
-      InGrid: () => import(
-          /* webpackChunkName: "in-grid" */
-          '@/components/atoms/product-list/banners/IngridBanner.vue'
-          ),
-      QuickLinks: () => import(
-          /* webpackChunkName: "quick-links" */
-          '@/components/atoms/quick-links/QuickLinks.vue'
-          )
+      CloseCross,
+      SeoBanner,
+      PromoBanner,
+      QuickView,
+      InGrid,
+      QuickLinks
     },
 
     data () {
@@ -230,9 +219,9 @@
         // this part here is customized to sort the keys
         function serialize (key: object | string) {
           if (
-              typeof key === 'object' &&
-              // @ts-ignore
-              key.request.path === '1/indexes/*/queries'
+            typeof key === 'object' &&
+            // @ts-ignore
+            key.request.path === '1/indexes/*/queries'
           ) {
             const object: any = key;
             return JSON.stringify({
@@ -410,7 +399,7 @@
        */
       facetFilters (): string {
         return this.isWeb ? 'display_on_website:true'
-            : 'display_on_portal:true';
+          : 'display_on_portal:true';
       }
     },
 
@@ -484,13 +473,13 @@
        */
       fetchCornerFlagRules () {
         getCornerFlags()
-            .then((rules) => {
-              if (Array.isArray(rules)) {
-                this.cornerFlags = rules;
-              }
-            })
-            // eslint-disable-next-line no-console
-            .catch((error) => console.error(error.message));
+          .then((rules) => {
+            if (Array.isArray(rules)) {
+              this.cornerFlags = rules;
+            }
+          })
+          // eslint-disable-next-line no-console
+          .catch((error) => console.error(error.message));
       },
 
       /**
@@ -555,45 +544,45 @@
 
       updateBanners () {
         getListBanners(location.pathname + location.search)
-            .then((data) => {
-              const { metaText, seoText, plpBanner, quickLinks } = data as Banner;
-              const descriptionTag: HTMLMetaElement | null =
-                  document.querySelector('meta[name=description]');
+          .then((data) => {
+            const { metaText, seoText, plpBanner, quickLinks } = data as Banner;
+            const descriptionTag: HTMLMetaElement | null =
+              document.querySelector('meta[name=description]');
 
-              if (typeof metaText === 'object') {
-                // Update page title
-                if (typeof metaText.title === 'string') {
-                  document.title = metaText.title;
-                }
-
-                if (descriptionTag !== null &&
-                    typeof metaText.description === 'string') {
-                  // Update page description
-                  descriptionTag.content = metaText.description;
-                }
+            if (typeof metaText === 'object') {
+              // Update page title
+              if (typeof metaText.title === 'string') {
+                document.title = metaText.title;
               }
 
-              this.heading = metaText?.h1;
-              this.quickLinks = quickLinks;
+              if (descriptionTag !== null &&
+                typeof metaText.description === 'string') {
+                // Update page description
+                descriptionTag.content = metaText.description;
+              }
+            }
 
-              commitSeoBanner(this.$store, seoText);
-              commitMainBanner(this.$store, plpBanner);
-            })
-            // eslint-disable-next-line no-console
-            .catch((error) => console.error(error.message));
+            this.heading = metaText?.h1;
+            this.quickLinks = quickLinks;
+
+            commitSeoBanner(this.$store, seoText);
+            commitMainBanner(this.$store, plpBanner);
+          })
+          // eslint-disable-next-line no-console
+          .catch((error) => console.error(error.message));
       },
 
       insertDigitalData () {
         getDigitalData(beautifyURLToRefinementURL(location))
-            .then((data) => {
-              window.digitalData = data as digitalData;
+          .then((data) => {
+            window.digitalData = data as digitalData;
 
-              if (isStatisticsEnabled() && Array.isArray(window.dataLayer)) {
-                window.dataLayer.push({ digitalData: window.digitalData });
-              }
-            })
-            // eslint-disable-next-line no-console
-            .catch((error) => console.error(error.message));
+            if (isStatisticsEnabled() && Array.isArray(window.dataLayer)) {
+              window.dataLayer.push({ digitalData: window.digitalData });
+            }
+          })
+          // eslint-disable-next-line no-console
+          .catch((error) => console.error(error.message));
       },
 
       /**
@@ -603,7 +592,7 @@
       getInGridBanners (index: number): InGridBanners {
         const banners = window.Signet?.InGridBanner || [];
         const bannerAtIndex = banners.filter((banner) =>
-            parseInt(banner.indexPosition, 10) === index);
+          parseInt(banner.indexPosition, 10) === index);
 
         return bannerAtIndex[0];
       },
@@ -614,7 +603,7 @@
       showInGridBanners (index: number): boolean {
         const banners = window.Signet?.InGridBanner || [];
         const bannerAtIndex = banners.filter((banner) =>
-            parseInt(banner.indexPosition, 10) === index);
+          parseInt(banner.indexPosition, 10) === index);
 
         return bannerAtIndex.length > 0;
       }
