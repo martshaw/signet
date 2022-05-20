@@ -58,6 +58,11 @@ export type AlgoliaProduct = {
   merchandising_6_ej: string
   merchandising_7_ej: string
   orderable_on_website: boolean
+  category: {
+    lvl0: string
+    lvl1: string | null
+    lvl2: string | null
+  }
 }
 /* eslint-enable camelcase */
 

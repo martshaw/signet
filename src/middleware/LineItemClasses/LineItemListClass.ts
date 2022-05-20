@@ -24,6 +24,7 @@ export default class LineItemListClass extends LineItemBaseClass {
   readonly availableToBuy: string;
   readonly newCalc: boolean;
   readonly orderableOnWebsite: boolean;
+  readonly categories: AlgoliaProduct['category']
 
   constructor (lineItemListObject: AlgoliaProduct) {
     super(lineItemListObject);
@@ -38,6 +39,7 @@ export default class LineItemListClass extends LineItemBaseClass {
     this.merchandising6 = lineItemListObject.merchandising_6_ej;
     this.merchandising7 = lineItemListObject.merchandising_7_ej;
     this.availableToBuy = lineItemListObject.available_to_buy;
+    this.categories = lineItemListObject.category;
     this.newCalc = lineItemListObject.new_calc;
     this.priceHistory = lineItemListObject.price_history_2;
     this.orderableOnWebsite = lineItemListObject.orderable_on_website;

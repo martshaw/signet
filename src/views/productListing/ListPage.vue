@@ -1,28 +1,30 @@
 <template>
   <ais-instant-search
-    :search-client="searchClient"
-    :index-name="indexName"
-    :routing="routing"
-    :middlewares="middlewares"
+      :search-client="searchClient"
+      :index-name="indexName"
+      :routing="routing"
+      :middlewares="middlewares"
   >
-    <!-- This looks to be sending a request -->
     <ais-configure
-      :filters="facetFilters"
-      :faceting-after-distinct.camel="true"
+        :filters="facetFilters"
+        :faceting-after-distinct.camel="true"
+        :click-analytics.camel="true"
     />
     <!--
       We have to have this search box otherwise search query's don't work
      -->
     <ais-search-box hidden />
+
     <promo-banner
-      v-if="readMainBanner.imageURL"
-      :banner="readMainBanner"
-      class="promo-banner"
+        v-if="readMainBanner.imageURL"
+        :banner="readMainBanner"
+        class="promo-banner"
     />
 
     <div
-      class="list-page"
-      :class="listPageClasses"
+        class="list-page"
+        :class="listPageClasses"
+        :data-insights-index="indexName"
     >
       <div class="page-info">
         <h1 class="page-info__title">
@@ -30,76 +32,76 @@
         </h1>
 
         <close-cross
-          size="20"
-          class="close-refinements"
-          @click="closeRefinements"
+            size="20"
+            class="close-refinements"
+            @click="closeRefinements"
         />
 
         <p
-          v-if="readSeoBanner.intro"
-          class="page-info__text"
+            v-if="readSeoBanner.intro"
+            class="page-info__text"
         >
           {{ readSeoBanner.intro }}
 
           <a
-            v-if="readSeoBanner.body"
-            href="#seoBanner"
-            class="page-info__jump"
+              v-if="readSeoBanner.body"
+              href="#seo-banner"
+              class="page-info__jump"
           >
             Read more
           </a>
         </p>
         <quick-links
-          v-if="quickLinks"
-          :links="quickLinks"
+            v-if="quickLinks"
+            :links="quickLinks"
         />
       </div>
+
       <top-section
-        :excluded-attributes="clearRefinementsIgnoreList"
-        @analyticsFilterInteraction="filterInteraction"
+          :excluded-attributes="clearRefinementsIgnoreList"
+          @analyticsFilterInteraction="filterInteraction"
       />
 
       <product-facets
-        ref="facets"
-        :excluded-attributes="clearRefinementsIgnoreList"
-        @analyticsResultsInteraction="resultsInteraction"
+          :excluded-attributes="clearRefinementsIgnoreList"
+          @analyticsFilterInteraction="resultsInteraction"
       />
 
-      <!-- The ais-infinite-hits are sending a request as well -->
       <ais-infinite-hits
-        :escape-h-t-m-l="false"
-        :transform-items="transformProducts"
-        class="products"
-        :class="productClassObj"
+          :escape-h-t-m-l="false"
+          :transform-items="transformProducts"
+          class="products"
+          :class="productClassObj"
       >
         <template v-slot="{items, results, isLastPage, refineNext}">
           <template v-for="(product, index) in items">
             <in-grid
-              v-if="showInGridBanners(index)"
-              :key="`${product.parentSku}-banner`"
-              :banner="getInGridBanners(index)"
+                v-if="showInGridBanners(index)"
+                :key="`${product.parentSku}-banner`"
+                :banner="getInGridBanners(index)"
             />
 
             <list-card
-              :key="product.parentSku"
-              :product="product"
-              :position="index"
-              :results="results"
-              :corner-flags-rules="cornerFlags"
+                :key="product.parentSku"
+                :product="product"
+                :position="index"
+                :results="results"
+                :corner-flags-rules="cornerFlags"
+                @send-select-event="sendSelectItem(product, index)"
             />
           </template>
 
           <button
-            v-show="!isLastPage"
-            class="c-btn t-black-btn load-more-btn"
-            @click="refineNext"
+              v-show="!isLastPage"
+              class="c-btn t-red-btn load-more-btn"
+              @click="refineNext"
           >
             Show more results
           </button>
 
           <ais-state-results v-show="items.length === 0">
             <template
-              v-slot="{state: {query}}"
+                v-slot="{state: {query}}"
             >
               Sorry, we can't find results for "{{ query }}"
             </template>
@@ -108,10 +110,10 @@
       </ais-infinite-hits>
 
       <seo-banner
-        v-if="readSeoBanner.body"
-        id="seoBanner"
-        ref="seoBanner"
-        class="seo-banner"
+          v-if="readSeoBanner.body"
+          id="seo-banner"
+          ref="seoBanner"
+          class="seo-banner"
       >
         <template #heading>
           <h2 class="seo-banner__title">
@@ -122,8 +124,8 @@
         <template #body>
           <!-- eslint-disable vue/no-v-html -->
           <div
-            class="seo-banner__content"
-            v-html="readSeoBanner.body"
+              class="seo-banner__content"
+              v-html="readSeoBanner.body"
           />
           <!-- eslint-enable vue/no-v-html -->
         </template>
@@ -140,12 +142,12 @@
   import type { AlgoliaProduct, digitalData } from '@/@types/types';
   import type { State } from '@/store/modules/product-list-page/state';
   import type { InGridBanners } from '@/@types/in-grid-banners';
+  import type { ListProductItem } from '@/@types/data-layer';
 
   // Packages
   import 'normalize.css';
   import Vue from 'vue';
   import algoliasearch from 'algoliasearch/lite';
-  // import { debounce } from 'lodash';
 
   // Middleware
   import listPageRouter from '@/router/listPageRouter';
@@ -157,11 +159,6 @@
   import { getListBanners, Banner } from '@/service/api-calls/banners';
   import { getDigitalData } from '@/service/api-calls/getDigitalData';
   import { isStatisticsEnabled } from '@/helpers/cookie-methods';
-
-  // Helpers
-  // @ts-ignore
-  import { getPageInstanceID } from '@/assets/scripts/getDataLayerProperty/digital-data';
-  import { isWebOnly } from '@/helpers/webOnly';
 
   // Stores
   import {
@@ -176,21 +173,20 @@
     commitMainBanner
   } from '@/store/modules/product-list-page/mutations';
 
+  // Helpers
+  // @ts-ignore
+  import { getPageInstanceID } from '@/assets/scripts/getDataLayerProperty/digital-data';
+  import { isWebOnly } from '@/helpers/webOnly';
+
   // Atoms
+
   // Molecules
   import ListCard from '@/components/molecules/products/list-page/ListCard.vue';
-  // mport { history as historyRouter } from 'instantsearch.js/es/lib/routers';
+
   // organisms
   import ProductFacets from '@/components/organisms/list-page/facets/ProductFacets.vue';
   import TopSection from '@/components/organisms/list-page/top-section/TopSection.vue';
   /* eslint-enable max-len, vue/max-len */
-  import CloseCross from '@/components/atoms/btn/CloseCross.vue';
-  import SeoBanner from '@/components/atoms/banners/SeoBanner.vue';
-  import PromoBanner from '@/components/atoms/banners/PromoBanner.vue';
-  import QuickView from
-    '@/components/molecules/quick-view-modal/QuickViewModal.vue';
-  import InGrid from '@/components/atoms/product-list/banners/IngridBanner.vue';
-  import QuickLinks from '@/components/atoms/quick-links/QuickLinks.vue';
 
   export default Vue.extend({
     name: 'ListPage',
@@ -199,38 +195,54 @@
       ProductFacets,
       TopSection,
       ListCard,
-      CloseCross,
-      SeoBanner,
-      PromoBanner,
-      QuickView,
-      InGrid,
-      QuickLinks
+      CloseCross: () => import(
+          /* webpackChunkName: "close-cross" */
+          '@/components/atoms/btn/CloseCross.vue'
+          ),
+      SeoBanner: () => import(
+          /* webpackChunkName: "seo-banner" */
+          '@/components/atoms/banners/SeoBanner.vue'
+          ),
+      PromoBanner: () => import(
+          /* webpackChunkName: "promo-banner" */
+          '@/components/atoms/banners/PromoBanner.vue'
+          ),
+      QuickView: () => import(
+          /* webpackChunkName: "quick-view-modal" */
+          '@/components/molecules/quick-view-modal/QuickViewModal.vue'
+          ),
+      InGrid: () => import(
+          /* webpackChunkName: "in-grid" */
+          '@/components/atoms/product-list/banners/IngridBanner.vue'
+          ),
+      QuickLinks: () => import(
+          /* webpackChunkName: "quick-links" */
+          '@/components/atoms/quick-links/QuickLinks.vue'
+          )
     },
 
     data () {
       function createSortedCache (options = { serializable: true }) {
         let cache: Record<
-          string,
-          typeof options['serializable'] extends true ? string : any
-        > = {};
-
+            string,
+            typeof options['serializable'] extends true ? string : any
+            > = {};
         // this part here is customized to sort the keys
         function serialize (key: object | string) {
-          console.log('serialize pre', key);
-
           if (
-            typeof key === 'object' &&
-            (key as any).request.path === '1/indexes/*/queries'
+              typeof key === 'object' &&
+              // @ts-ignore
+              key.request.path === '1/indexes/*/queries'
           ) {
             const object: any = key;
-
             return JSON.stringify({
               ...object,
               request: {
                 ...object.request,
                 data: {
                   ...object.request.data,
-                  requests: object.request.data.requests.map((request: any) => ({
+                  // @ts-ignore
+                  requests: object.request.data.requests.map((request) => ({
                     ...request,
                     params: request.params.split('&').sort().join('&')
                   }))
@@ -240,21 +252,20 @@
           }
           return JSON.stringify(key);
         }
-
         return {
           get<TValue> (
-            key: object | string,
-            defaultValue: () => Readonly<Promise<TValue>>,
-            events: { miss: (value: TValue) => Promise<any> } = {
-              miss: () => Promise.resolve()
-            }
+              key: object | string,
+              defaultValue: () => Readonly<Promise<TValue>>,
+              events: { miss: (value: TValue) => Promise<any> } = {
+                miss: () => Promise.resolve()
+              }
           ) {
             const keyAsString = serialize(key);
             if (keyAsString in cache) {
               return Promise.resolve(
-                options.serializable
-                  ? JSON.parse(cache[keyAsString])
-                  : cache[keyAsString]
+                  options.serializable
+                      ? JSON.parse(cache[keyAsString])
+                      : cache[keyAsString]
               );
             }
             const promise = defaultValue();
@@ -262,12 +273,12 @@
             return promise.then((value) => miss(value)).then(() => promise);
           },
           set<TValue> (
-            key: object | string,
-            value: TValue
+              key: object | string,
+              value: TValue
           ): Readonly<Promise<TValue>> {
             cache[serialize(key)] = options.serializable
-              ? JSON.stringify(value)
-              : value;
+                ? JSON.stringify(value)
+                : value;
             return Promise.resolve(value);
           },
           delete (key: object | string) {
@@ -283,28 +294,30 @@
 
       return {
         searchClient: algoliasearch(
-          window.Signet.VUE_APP_ALGOLIA_APP_ID as string,
-          window.Signet.VUE_APP_ALGOLIA_APP_KEY as string,
-          {
-            // casted as any here, it's just to show the idea
-            requestsCache: createSortedCache() as any,
-            responsesCache: createSortedCache({ serializable: false }) as any
-          }
+            window.Signet.VUE_APP_ALGOLIA_APP_ID as string,
+            window.Signet.VUE_APP_ALGOLIA_APP_KEY as string,
+            {
+              // @ts-ignore
+              requestsCache: createSortedCache(),
+              // @ts-ignore
+              responsesCache: createSortedCache({ serializable: false })
+            }
         ),
         routing: listPageRouter,
         middlewares: [
           () => {
             return {
-              // onStateChange: debounce(() => {
-              //   // Give it time for the URl to change
-              //   // @ts-ignore
-              //   this.updateBanners();
-              // }, 400)
+              onStateChange: () => {
+                // Give it time for the URl to change
+                // @ts-ignore
+                this.updateBanners();
+              }
             };
           }
         ],
         cornerFlags: [] as CornerFlags[],
-        quickLinks: undefined as Banner['quickLinks']
+        quickLinks: undefined as Banner['quickLinks'],
+        heading: undefined as string | undefined
       };
     },
 
@@ -324,7 +337,8 @@
           'category.lvl0',
           'category.lvl1',
           'category.lvl2',
-          'select'
+          'select',
+          'query'
         ];
       },
 
@@ -376,9 +390,10 @@
        * Set the text in the h1 tag
        */
       pageHeading (): string {
-        // const query = listPageRouter.router.read().query[0];
-        // this.readSeoBanner.title || query ||
-        return 'Search';
+        const url = new URLSearchParams(location.search);
+        const query = url.get('query');
+
+        return this.heading || query || 'Search';
       },
 
       /**
@@ -395,29 +410,23 @@
        */
       facetFilters (): string {
         return this.isWeb ? 'display_on_website:true'
-          : 'display_on_portal:true';
+            : 'display_on_portal:true';
       }
     },
 
     mounted () {
-      // Hack to get a polyfill working for IE as it looks like one of are
-      // plugins don't support IE
-      Object.isExtensible({});
-
       this.fetchCornerFlagRules();
       this.insertDigitalData();
 
       // Send the session ID for tracking
       if (isStatisticsEnabled()) {
         window.dataLayer?.push({
-          algoliaUserToken: sessionStorage.getItem('session-id'),
-          algoliaIndexName: this.indexName
+          algoliaUserToken: sessionStorage.getItem('session-id')
         });
       }
     },
 
     methods: {
-
       /**
        * Update the mobile refinement switch value
        */
@@ -426,9 +435,13 @@
       },
 
       /**
-       * Transform the products using Algolia data into their Signet from
+       * Transform the products using Algolia data into there Signet from
        */
       transformProducts (items: AlgoliaProduct[]) {
+        if (isStatisticsEnabled()) {
+          this.sendViewItemListEvent(items);
+        }
+
         return items.map((item) => {
           return new LineItemListClass(item);
         });
@@ -471,63 +484,116 @@
        */
       fetchCornerFlagRules () {
         getCornerFlags()
-          .then((rules) => {
-            if (Array.isArray(rules)) {
-              this.cornerFlags = rules;
+            .then((rules) => {
+              if (Array.isArray(rules)) {
+                this.cornerFlags = rules;
+              }
+            })
+            // eslint-disable-next-line no-console
+            .catch((error) => console.error(error.message));
+      },
+
+      /**
+       * Tracking event to fire for the products.
+       */
+      sendViewItemListEvent (products: AlgoliaProduct[]) {
+        const items: ListProductItem[] = [];
+
+        if (Array.isArray(window.dataLayer)) {
+          products?.forEach((product, index) => {
+            items.push({
+              item_id: product.parent_sku.toString(),
+              item_name: product.short_name,
+              currency: 'GBP',
+              index: index,
+              item_brand: product.brand?.lvl0 || 'Unknown',
+              item_category: product.category.lvl0,
+              item_category2: product.category.lvl1 || undefined,
+              item_category3: product.category.lvl2 || undefined,
+              item_list_id: 'plp',
+              item_list_name: this.pageHeading,
+              price: product.current_price
+            });
+          });
+
+          window.dataLayer.push({ ecommerce: null });
+          window.dataLayer.push({
+            event: 'view_item_list',
+            ecommerce: { items }
+          });
+        }
+      },
+
+      /**
+       * Tracking event to fire when a product has been clicked on
+       */
+      sendSelectItem (product: LineItemListClass, index: number) {
+        if (isStatisticsEnabled() && Array.isArray(window.dataLayer)) {
+          const item: ListProductItem = {
+            item_id: product.productSku.toString(),
+            item_name: product.name,
+            currency: 'GBP',
+            index: index,
+            item_brand: product.brand?.lvl0 || 'Unknown',
+            item_category: product.categories.lvl0,
+            item_category2: product.categories.lvl1 || undefined,
+            item_category3: product.categories.lvl2 || undefined,
+            item_list_id: 'plp',
+            item_list_name: this.pageHeading,
+            price: product.priceAsNumber
+          };
+
+          window.dataLayer.push({ ecommerce: null });
+          window.dataLayer.push({
+            event: 'select_item',
+            ecommerce: {
+              items: [item]
             }
-          })
-          // eslint-disable-next-line no-console
-          .catch((error) => console.error(error.message));
+          });
+        }
       },
 
       updateBanners () {
         getListBanners(location.pathname + location.search)
-          .then((data) => {
-            const { metaText, seoText, plpBanner, quickLinks } = data as Banner;
-            const descriptionTag: HTMLMetaElement | null =
-              document.querySelector('meta[name=description]');
-            const h1Tag: HTMLHeadingElement | null =
-              document.querySelector('h1');
+            .then((data) => {
+              const { metaText, seoText, plpBanner, quickLinks } = data as Banner;
+              const descriptionTag: HTMLMetaElement | null =
+                  document.querySelector('meta[name=description]');
 
-            if (typeof metaText === 'object') {
-              if (typeof metaText.title === 'string') {
+              if (typeof metaText === 'object') {
                 // Update page title
-                document.title = metaText.title;
+                if (typeof metaText.title === 'string') {
+                  document.title = metaText.title;
+                }
+
+                if (descriptionTag !== null &&
+                    typeof metaText.description === 'string') {
+                  // Update page description
+                  descriptionTag.content = metaText.description;
+                }
               }
 
-              if (descriptionTag !== null &&
-                typeof metaText.description === 'string') {
-                // Update page description
-                descriptionTag.content = metaText.description;
-              }
+              this.heading = metaText?.h1;
+              this.quickLinks = quickLinks;
 
-              if (h1Tag !== null && typeof metaText.h1 === 'string') {
-                // Update H1 tag
-                h1Tag.textContent = metaText.h1;
-              }
-            }
-
-            this.quickLinks = quickLinks;
-
-            commitSeoBanner(this.$store, seoText);
-            commitMainBanner(this.$store, plpBanner);
-          })
-          // eslint-disable-next-line no-console
-          .catch((error) => console.error(error.message));
+              commitSeoBanner(this.$store, seoText);
+              commitMainBanner(this.$store, plpBanner);
+            })
+            // eslint-disable-next-line no-console
+            .catch((error) => console.error(error.message));
       },
 
       insertDigitalData () {
         getDigitalData(beautifyURLToRefinementURL(location))
-          .then((data) => {
-            window.digitalData = data as digitalData;
+            .then((data) => {
+              window.digitalData = data as digitalData;
 
-            if (isStatisticsEnabled()) {
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({ digitalData: window.digitalData });
-            }
-          })
-          // eslint-disable-next-line no-console
-          .catch((error) => console.error(error.message));
+              if (isStatisticsEnabled() && Array.isArray(window.dataLayer)) {
+                window.dataLayer.push({ digitalData: window.digitalData });
+              }
+            })
+            // eslint-disable-next-line no-console
+            .catch((error) => console.error(error.message));
       },
 
       /**
@@ -537,7 +603,7 @@
       getInGridBanners (index: number): InGridBanners {
         const banners = window.Signet?.InGridBanner || [];
         const bannerAtIndex = banners.filter((banner) =>
-          parseInt(banner.indexPosition, 10) === index);
+            parseInt(banner.indexPosition, 10) === index);
 
         return bannerAtIndex[0];
       },
@@ -548,7 +614,7 @@
       showInGridBanners (index: number): boolean {
         const banners = window.Signet?.InGridBanner || [];
         const bannerAtIndex = banners.filter((banner) =>
-          parseInt(banner.indexPosition, 10) === index);
+            parseInt(banner.indexPosition, 10) === index);
 
         return bannerAtIndex.length > 0;
       }

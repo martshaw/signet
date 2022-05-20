@@ -87,7 +87,7 @@ export default class LineItemBaseClass {
    * @private
    * @readonly
    */
-  readonly #brand: string | undefined;
+  readonly brand: AlgoliaProduct['brand'];
 
   constructor (lineItemObject: AlgoliaProduct) {
     this.name = lineItemObject.short_name;
@@ -97,7 +97,7 @@ export default class LineItemBaseClass {
     this.price = lineItemObject.current_price;
     this.#isOnSale = lineItemObject.on_sale_calc;
     this.url = lineItemObject.product_detail_url;
-    this.#brand = lineItemObject.brand?.lvl0;
+    this.brand = lineItemObject.brand;
     // @ts-ignore
     this.priceHistory = lineItemObject.price_history_2;
     // @ts-ignore
